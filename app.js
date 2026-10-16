@@ -1,21 +1,3 @@
-// Local Sandbox Mock Database to verify rendering pipeline stability
-const levelsData = [
-    {
-        id: 1,
-        chapter: "Section 4",
-        title: "Quadratic Models & Factorisation (Sandbox Setup)",
-        objectives: ["Verify file pipeline connectivity.", "Confirm modular styling links."],
-        mustDo: "If you see this box turning green, your three separate web files are successfully talking to each other!",
-        shouldDo: "Verify layout elements display accurately.",
-        aspireToDo: "Push changes to production to test GitHub Pages distribution metrics.",
-        quiz: {
-            question: "Is this modular architectural framework setup active?",
-            options: ["Yes, engine initializes successfully.", "No, scripts failed to fire."],
-            correctIndex: 0
-        }
-    }
-];
-
 // Progressive Campaign State Management Configuration
 let userProgress = {
     unlockedLevel: 1,
