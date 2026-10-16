@@ -9,7 +9,7 @@ const levelsData = [
         ],
         templateId: "level-1", 
         quiz: {
-            question: "Factorise the non-monic expression completely from your notes: \\(9x^2 + 24x + 7\\).",
+            question: "Factorise the non-monic expression completely: \\(9x^2 + 24x + 7\\).",
             options: ["\\((3x + 1)(3x + 7)\\)", "\\((9x + 1)(x + 7)\\)", "\\((3x - 1)(3x - 7)\\)", "\\(x^2(9x + 24) + 7\\)"],
             correctIndex: 0
         }
@@ -31,8 +31,7 @@ window.initAppEngine = function() {
         warehouse.innerHTML = iframeDoc.body.innerHTML;
         renderCampaignMap();
     } catch (err) {
-        console.error("Iframe context load block:", err);
-        // Fallback connection channel if local hard drive restrictions interfere
+        console.error("Iframe context load block, trying fallback fetch...", err);
         fetch('./sections.html?v=' + Date.now())
             .then(res => res.text())
             .then(html => {
@@ -42,8 +41,8 @@ window.initAppEngine = function() {
             .catch(fetchErr => {
                 document.getElementById('map-target').innerHTML = 
                     "<div style='padding:20px; background:#fff3cd; border:2px solid #eab308; color:#a16207; border-radius:8px;'>" +
-                    "<h3>System Note: Cross-Origin Storage Active</h3>" +
-                    "<p>Push your workspace code to GitHub to authorize the data bridge channel live!</p>" +
+                    "<h3>System Note: Loading Bridge Active</h3>" +
+                    "<p>Push your workspace code to GitHub to authorize the data channel live!</p>" +
                     "</div>";
             });
     }
@@ -183,9 +182,13 @@ window.resetCampaign = function() {
     }
 };
 
+// 🔄 Foolproof Asynchronous Typesetting Compiler
 function applyMathTypesetting() {
-    if (window.MathJax && window.MathJax.typeset) {
-        window.MathJax.typeset();
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise();
+    } else {
+        // Retry shortly if MathJax hasn't fully booted from CDN yet
+        setTimeout(applyMathTypesetting, 200);
     }
 }
 
