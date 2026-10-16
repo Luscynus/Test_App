@@ -21,9 +21,10 @@ if (localStorage.getItem('quadratic_campaign_progress')) {
     userProgress = JSON.parse(localStorage.getItem('quadratic_campaign_progress'));
 }
 
-// 🌐 Load your text locker asynchronously behind the scenes
+// 🌐 Load your text locker with a cache-buster token attached
 function initAppEngine() {
-    fetch('./sections.html')
+    // ⚡ The '?v=' token breaks any old browser history lock permanently
+    fetch('./sections.html?v=' + Date.now())
         .then(response => {
             if (!response.ok) {
                 throw new Error("HTTP error! Status: " + response.status);
@@ -31,17 +32,19 @@ function initAppEngine() {
             return response.text();
         })
         .then(htmlContent => {
+            if (!htmlContent.trim()) {
+                throw new Error("The sections.html file was read but it returned empty text.");
+            }
             document.getElementById('curriculum-warehouse').innerHTML = htmlContent;
             renderCampaignMap();
         })
         .catch(err => {
             console.error("Critical curriculum load failure:", err);
-            // 🚨 Print error directly to the container so you can see it visually!
             document.getElementById('map-target').innerHTML = 
                 "<div style='padding: 20px; background: #fee2e2; border: 2px dashed #ef4444; color: #b91c1c; border-radius: 8px; margin-top: 20px; font-family: monospace;'>" +
                 "<h3>⚠️ Data Loading Failure:</h3>" +
                 "<p>" + err.message + "</p>" +
-                "<p><em>Tip: If testing on your local machine, open this via a VS Code Live Server or push to GitHub to bypass security cross-origin checks!</em></p>" +
+                "<p><em>Tip: Open your browser's Developer Console (F12 or right-click -> Inspect -> Console) to see the hidden trace.</em></p>" +
                 "</div>";
         });
 }
@@ -90,14 +93,13 @@ function renderCampaignMap() {
                 buttonsHTML += '<button class="quiz-option" onclick="evaluateAnswer(' + level.id + ',' + idx + ')">' + letter + ') ' + opt + '</button>';
             });
 
-            // Extract pristine LaTeX dynamically from our warehouse containers
             const mustDoSource = document.getElementById(level.templateId + '-mustDo');
             const shouldDoSource = document.getElementById(level.templateId + '-shouldDo');
             const aspireSource = document.getElementById(level.templateId + '-aspireToDo');
 
-            const mustDoText = mustDoSource ? mustDoSource.innerHTML : "Lesson data missing in sections.html.";
-            const shouldDoText = shouldDoSource ? shouldDoSource.innerHTML : "Tasks data missing in sections.html.";
-            const aspireText = aspireSource ? aspireSource.innerHTML : "Challenge data missing in sections.html.";
+            const mustDoText = mustDoSource ? mustDoSource.innerHTML : "Lesson data block missing in sections.html.";
+            const shouldDoText = shouldDoSource ? shouldDoSource.innerHTML : "Tasks data block missing in sections.html.";
+            const aspireText = aspireSource ? aspireSource.innerHTML : "Challenge data block missing in sections.html.";
 
             contentHTML += `
                 <div class="objectives">
