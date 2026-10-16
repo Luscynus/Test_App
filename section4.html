@@ -41,10 +41,17 @@
         .box { background-color: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 15px; margin: 15px 0; color: var(--text-main); }
         .box ul { margin: 10px 0; padding-left: 20px; }
         .box li { margin-bottom: 8px; }
+        
         .example { border-left: 4px solid var(--neon-green); background-color: #0f2d22; padding: 15px; border-radius: 4px; margin: 15px 0; color: var(--text-main); }
-        .exercise-item { background: #1e293b; border: 1px solid #334155; padding: 12px; border-radius: 8px; color: var(--text-main); }
         .math-center { display: block; text-align: center; margin: 15px 0; font-size: 1.2rem; }
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 15px 0; }
+        
+        /* Practice Exercises Grid Elements */
+        .exercise-block { background: #1e293b; border-left: 4px solid var(--neon-amber); padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+        .exercise-title { color: var(--text-main); font-weight: 700; margin-bottom: 12px; }
+        .exercise-item { background: #0f172a; border: 1px solid var(--border-glow); padding: 10px 14px; border-radius: 6px; color: var(--text-main); }
+        
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     </style>
 </head>
 <body>
@@ -95,18 +102,49 @@
             </div>
         </div>
     </div>
-
     <!-- Slide 4: Practice Set -->
     <div class="slide-content" id="slide-4">
-        <h3 style="color: var(--neon-amber);">🏋️ Practice Exercises</h3>
-        <p>Solve these expressions in your workbook using common factoring, notable identities, or grouping:</p>
+        <h3 style="color: var(--neon-amber); margin-top: 0;">🏋️ Practice Exercises</h3>
         
-        <div class="grid-2">
-            <div class="exercise-item"><strong>1.</strong> <math><mn>6</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>7</mn><mi>x</math></div>
-            <div class="exercise-item"><strong>2.</strong> <math><mn>12</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>x</</math></div>
-            <div class="exercise-item"><strong>3.</strong> <math><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>24</math></div>
-            <div class="exercise-item"><strong>4.</strong> <math><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>12</mn><mi>x</mi><mo>+</mo><mn>9</math></div>
+        <!-- Exercise 1 -->
+        <div class="exercise-block">
+            <div class="exercise-title">Exercise 1: Factorise each expression completely.</div>
+            <div class="grid-3">
+                <div class="exercise-item">a) <math><mn>6</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>7</mn><mi>x</math></div>
+                <div class="exercise-item">b) <math><mn>12</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>x</</math></div>
+                <div class="exercise-item">c) <math><mn>18</mn><msup><mi>x</mi><mn>4</mn></msup><mo>−</mo><mn>8</mn><msup><mi>x</mi><mn>3</mn></msup><mo>+</mo><mn>6</mn><msup><mi>x</mi><mn>2</></math></div>
+                <div class="exercise-item">d) <math><mn>2</mn><msup><mi>x</mi><mn>5</mn></msup><mo>−</mo><mn>10</mn><msup><mi>x</mi><mn>4</mn></msup><mo>+</mo><mn>20</mn><msup><mi>x</mi><mn>3</></math></div>
+                <div class="exercise-item">e) <math><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>9</math></div>
+                <div class="exercise-item">f) <math><mn>121</mn><mo>−</mo><mn>49</mn><msup><mi>x</mi><mn>2</></math></div>
+            </div>
         </div>
+
+        <!-- Exercise 2 -->
+        <div class="exercise-block">
+            <div class="exercise-title">Exercise 2: Factorise the following expressions.</div>
+            <div class="grid-2">
+                <div class="exercise-item">a) <math><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>7</mn><mi>x</mi><mo>+</mo><mn>6</math></div>
+                <div class="exercise-item">b) <math><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>6</mn><mi>x</mi><mo>+</mo><mn>9</math></div>
+                <div class="exercise-item">c) <math><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>24</math></div>
+                <div class="exercise-item">d) <math><mn>25</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>25</mn><mi>x</mi><mo>+</mo><mn>6</</math></div>
+                <div class="exercise-item">e) <math><mn>36</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>24</mn><mi>x</mi><mo>+</mo><mn>3</</math></div>
+            </div>
+        </div>
+
+        <!-- Exercise 3 -->
+        <div class="exercise-block">
+            <div class="exercise-title">Exercise 3: Choose the most efficient method and justify your choice.</div>
+            <div style="font-size: 0.8rem; margin-bottom: 10px; color: var(--text-muted); font-style: italic;">Methods: Common factoring, notable identity, or third identity.</div>
+            <div class="grid-2">
+                <div class="exercise-item">a) <math><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>16</math></div>
+                <div class="exercise-item">b) <math><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>5</mn><mi>x</mi><mo>+</mo><mn>6</math></div>
+                <div class="exercise-item">c) <math><mn>2</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>8</mn><mi>x</mi></math></div>
+                <div class="exercise-item">d) <math><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>12</mn><mi>x</mi><mo>+</mo><mn>9</math></div>
+                <div class="exercise-item">e) <math><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>3</mn><mi>x</mi><mo>−</mo><mn>10</math></div>
+                <div class="exercise-item">f) <math><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>8</mn><mi>x</mi><mo>+</mo><mn>3</</math></div>
+            </div>
+        </div>
+
     </div>
 
     <script>
