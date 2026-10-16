@@ -3,18 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanity Check</title>
+    <title>Snippet Step 2: Math Engine</title>
+    
+    <!-- ⚡ Dynamic KaTeX Math Presentation Library -->
+    <link rel="stylesheet" href="https://jsdelivr.net">
+    <script src="https://jsdelivr.net" defer></script>
+    <script src="https://jsdelivr.net" defer></script>
 </head>
-<body style="background-color: #ffffff; color: #000000; padding: 30px; font-family: sans-serif;">
+<body style="background-color: #ffffff; color: #000000; padding: 30px; font-family: sans-serif; line-height: 1.5;">
 
-    <!-- 🚨 Absolute Sanity Check Banner -->
-    <h1 style="color: #ff0000; background: #ffe4e6; padding: 15px; border: 2px solid #ff0000; border-radius: 8px;">
-        📢 CODE IS LOADING PERFECTLY!
-    </h1>
+    <h1 style="color: #2563eb;">🚀 Step 2: Math Engine Verification</h1>
+    <p>The code is loading! Let's verify that the math processor handles our quadratic formula cleanly:</p>
 
-    <p style="font-size: 1.2rem; font-weight: bold;">
-        If you can read this text, your file is successfully rendering in the browser. 
-    </p>
+    <!-- Formula snippet container -->
+    <div style="background: #f1f5f9; padding: 20px; text-align: center; font-size: 1.4rem; border-radius: 8px; margin: 20px 0; border: 1px solid #cbd5e1;">
+        $$9x^2 + 24x + 7 = 0$$
+    </div>
 
+    <p>Inline formula check: If $a = 9$, then the expression is active.</p>
+
+    <!-- Micro-compiler routine -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            function compileSnippetMath() {
+                if (window.renderMathInElement) {
+                    window.renderMathInElement(document.body, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false}
+                        ],
+                        throwOnError: false
+                    });
+                } else {
+                    setTimeout(compileSnippetMath, 50);
+                }
+            }
+            compileSnippetMath();
+        });
+    </script>
 </body>
 </html>
