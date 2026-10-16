@@ -3,31 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Sandbox</title>
+    <title>Math Snippet Test</title>
     
-    <!-- ⚡ Industry standard math presentation engine -->
+    <!-- ⚡ Industry Standard Math Engine -->
     <link rel="stylesheet" href="https://jsdelivr.net">
     <script src="https://jsdelivr.net" defer></script>
     <script src="https://jsdelivr.net" defer></script>
 </head>
-<body style="font-family: sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; background: #f8fafc; color: #1e293b;">
+<body style="font-family: sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; line-height: 1.5;">
 
-    <div style="background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
-        <h2 style="margin-top: 0; color: #0f172a;">🧪 Sandbox Fresh Setup</h2>
-        <p>Let's check if the math layout parses cleanly right here:</p>
-        
-        <!-- Display Math Block Test -->
-        <div style="padding: 15px; background: #f1f5f9; border-radius: 8px; margin: 20px 0; text-align: center; font-size: 1.2rem;">
-            $$ax^2 + bx + c = 0$$
-        </div>
+    <h2>🟢 Snippet Step 1: Math Text Test</h2>
+    <p>We are checking if the browser reads the text and turns the signs between the dollar symbols into math notation.</p>
 
-        <p>Inline test: The variable is $x$ and the constant is $c$.</p>
+    <!-- Formula block display test -->
+    <div style="background: #f1f5f9; padding: 15px; text-align: center; font-size: 1.25rem; border-radius: 6px; margin: 20px 0;">
+        $$9x^2 + 24x + 7$$
     </div>
 
-    <!-- Lifecycle Engine: Scans the page the exact millisecond it finishes loading -->
+    <p>Inline test: Let $a = 9$, $b = 24$, and $c = 7$.</p>
+
+    <!-- Micro-compiler snippet -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            function renderMath() {
+            function runCompiler() {
                 if (window.renderMathInElement) {
                     window.renderMathInElement(document.body, {
                         delimiters: [
@@ -37,10 +35,10 @@
                         throwOnError: false
                     });
                 } else {
-                    setTimeout(renderMath, 50);
+                    setTimeout(runCompiler, 50);
                 }
             }
-            renderMath();
+            runCompiler();
         });
     </script>
 </body>
