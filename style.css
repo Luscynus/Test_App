@@ -179,4 +179,24 @@ header p { margin: 10px 0 0 0; opacity: 0.8; font-size: 1.1rem; }
     float: right;
 }
 .reset-btn:hover { background: #fee2e2; color: var(--danger); border-color: #fca5a5; }
-.math-block { overflow-x: auto; padding: 5px 0; }
+
+/* 🧮 Professional Mathematical Layout Engine */
+.math-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 18px 0;
+    padding: 14px;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    overflow-x: auto;
+    font-size: 1.1rem;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+}
+
+/* Ensure inline MathJax elements don't get cut off vertically */
+mjx-container[display="true"] {
+    margin: 0 !important;
+    padding: 4px 0;
+}
