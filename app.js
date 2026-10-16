@@ -9,8 +9,8 @@ const levelsData = [
         ],
         templateId: "level-1", 
         quiz: {
-            question: "Factorise the non-monic expression completely: \(9x^2 + 24x + 7\).",
-            options: ["\((3x + 1)(3x + 7)\)", "\((9x + 1)(x + 7)\)", "\((3x - 1)(3x - 7)\)", "\(x^2(9x + 24) + 7\)"],
+            question: "Factorise the non-monic expression completely: \\(9x^2 + 24x + 7\\).",
+            options: ["\\((3x + 1)(3x + 7)\\)", "\\((9x + 1)(x + 7)\\)", "\\((3x - 1)(3x - 7)\\)", "\\(x^2(9x + 24) + 7\\)"],
             correctIndex: 0
         }
     }
@@ -189,7 +189,7 @@ function applyMathTypesetting() {
             delimiters: [
                 {left: '\[', right: '\]', display: true},
                 {left: '\(', right: '\)', display: false},
-                {left: '\\(', right: '\\', display: false},
+                {left: '\\(', right: '\\)', display: false},
                 {left: '\\[', right: '\\]', display: true}
             ],
             throwOnError: false
