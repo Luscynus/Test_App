@@ -3,51 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forced Bright Snippet</title>
-    
-    <!-- ⚡ Math Engine Links -->
-    <link rel="stylesheet" href="https://jsdelivr.net">
-    <script src="https://jsdelivr.net" defer></script>
-    <script src="https://jsdelivr.net" defer></script>
-
-    <style>
-        /* 🛑 Smash forced browser dark mode overrides */
-        html, body {
-            background-color: #ffffff !important;
-            color: #111111 !important;
-            color-scheme: light !important;
-        }
-    </style>
+    <title>Sanity Check</title>
 </head>
-<body style="font-family: sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; line-height: 1.5; background-color: #ffffff !important; color: #111111 !important;">
+<body style="background-color: #ffffff; color: #000000; padding: 30px; font-family: sans-serif;">
 
-    <h2>🟢 Snippet Step 1: Force Bright Render Test</h2>
-    <p>We are forcing a pure white background to smash through any browser dark-mode cache bugs.</p>
+    <!-- 🚨 Absolute Sanity Check Banner -->
+    <h1 style="color: #ff0000; background: #ffe4e6; padding: 15px; border: 2px solid #ff0000; border-radius: 8px;">
+        📢 CODE IS LOADING PERFECTLY!
+    </h1>
 
-    <!-- Formula snippet container -->
-    <div style="background: #e2e8f0 !important; color: #111111 !important; padding: 15px; text-align: center; font-size: 1.25rem; border-radius: 6px; margin: 20px 0;">
-        $$9x^2 + 24x + 7$$
-    </div>
+    <p style="font-size: 1.2rem; font-weight: bold;">
+        If you can read this text, your file is successfully rendering in the browser. 
+    </p>
 
-    <p>Inline numbers test: Let $a = 9$, $b = 24$, and $c = 7$.</p>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            function runCompiler() {
-                if (window.renderMathInElement) {
-                    window.renderMathInElement(document.body, {
-                        delimiters: [
-                            {left: '$$', right: '$$', display: true},
-                            {left: '$', right: '$', display: false}
-                        ],
-                        throwOnError: false
-                    });
-                } else {
-                    setTimeout(runCompiler, 50);
-                }
-            }
-            runCompiler();
-        });
-    </script>
 </body>
 </html>
