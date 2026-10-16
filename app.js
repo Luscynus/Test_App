@@ -9,8 +9,8 @@ if (localStorage.getItem('quadratic_campaign_progress')) {
     userProgress = JSON.parse(localStorage.getItem('quadratic_campaign_progress'));
 }
 
-// Active UI Rendering Engine
-function renderCampaignMap() {
+// 🚀 Expose renderCampaignMap globally so the MathJax engine can trigger it directly
+window.renderCampaignMap = function() {
     const container = document.getElementById('map-target');
     if (!container) return;
     container.innerHTML = '';
@@ -23,15 +23,15 @@ function renderCampaignMap() {
         let badgeText = 'Locked 🔒';
         let badgeClass = 'badge-locked';
 
-        if (userProgress.completedLevels.includes(level.id)) {
-            statusClass = 'unlocked completed';
-            badgeText = 'Mastered ✓';
-            badgeClass = 'badge-completed';
-        } else if (level.id === userProgress.unlockedLevel) {
-            statusClass = 'unlocked';
-            badgeText = 'Active Quest ⚡';
-            badgeClass = 'badge-unlocked';
-        }
+                if (userProgress.completedLevels.includes(level.id)) {
+                    statusClass = 'unlocked completed';
+                    badgeText = 'Mastered ✓';
+                    badgeClass = 'badge-completed';
+                } else if (level.id === userProgress.unlockedLevel) {
+                    statusClass = 'unlocked';
+                    badgeText = 'Active Quest ⚡';
+                    badgeClass = 'badge-unlocked';
+                }
 
         card.className = 'level-card ' + statusClass;
         
@@ -99,8 +99,12 @@ function renderCampaignMap() {
     });
 
     updateProgressBar();
-    // 🚀 Flush the MathJax cache immediately after appending the new elements
-    triggerMathCompilation();
+    
+    // Compile elements immediately if MathJax finishes booting up early
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetClear();
+        window.MathJax.typesetPromise();
+    }
 }
 
 // Global Verification Processor
@@ -122,7 +126,7 @@ window.evaluateAnswer = function(levelId, chosenIdx) {
         }
 
         saveState();
-        setTimeout(renderCampaignMap, 1200);
+        setTimeout(window.renderCampaignMap, 1200);
     } else {
         feedbackZone.style.color = "var(--danger)";
         feedbackZone.innerHTML = "❌ Verification Failed. Review your whiteboard notes, check intermediate calculations, and try again! If stuck, report to the Guided Table.";
@@ -145,31 +149,15 @@ window.resetCampaign = function() {
     if(confirm("Are you sure you want to completely clear all progress variables? This action reverts all locks.")) {
         userProgress = { unlockedLevel: 1, completedLevels: [] };
         saveState();
-        renderCampaignMap();
+        window.renderCampaignMap();
     }
 };
 
-// 🔄 Advanced Lifecycle Sync Engine with Cache Clearing
-function triggerMathCompilation() {
-    if (window.MathJax) {
-        try {
-            // 🌟 Clear internal cache state so MathJax scans new innerHTML changes
-            window.MathJax.typesetClear();
-            window.MathJax.typesetPromise();
-        } catch (err) {
-            console.log('MathJax compiling error: ', err);
-        }
-    }
-}
-
-// Fire rendering immediately when DOM is structured
+// Fire fallback rendering if browser network blocks custom hooks
 window.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('reset-campaign-btn');
     if (resetBtn) resetBtn.addEventListener('click', window.resetCampaign);
-    renderCampaignMap();
-});
-
-// Force a second sweep the exact microsecond the MathJax framework finishes downloading online
-window.addEventListener('load', () => {
-    triggerMathCompilation();
+    if (!window.MathJax || !window.MathJax.startup) {
+        window.renderCampaignMap();
+    }
 });
