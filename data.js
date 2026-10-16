@@ -3,21 +3,112 @@ const levelsData = [
     {
         id: 1,
         chapter: "Section 4",
-        title: "Quadratic Models & Factorisation",
+        title: "Quadratic Models and Factorisation",
         objectives: [
-            "Isolate global common algebraic factors from expressions recursively.",
-            "Deploy notable identity patterns and splitting methods to factorise monic and non-monic terms cleanly."
+            "Isolate global common algebraic factors from expressions using the distributive property in reverse.",
+            "Deploy notable identity structures, monic sum-product relationships, and non-monic grouping splits to factorise expressions."
         ],
-        mustDo: "Read Section 4.1-4.2. Master the 3 identities: Sum square $a^2 + 2ab + b^2 = (a+b)^2$, Difference square $a^2 - 2ab + b^2 = (a-b)^2$, and Difference of squares $a^2 - b^2 = (a-b)(a+b)$. For non-monic quadratics ($ax^2+bx+c$), find two numbers whose product equals $a \\cdot c$ (the leading coefficient multiplied by the constant) and whose sum equals $b$. Once found, rewrite the middle term $bx$ using these two numbers and factorise the expression by grouping terms term by term.<br><br><strong>Mandatory Tasks:</strong> Complete Exercise 4.1 (a, c, e) and Exercise 4.2 (a, d) on paper. Check your answers with your notes before initiating the gate verification.",
-        shouldDo: "Complete Exercise 4.3. For each expression below, choose the most efficient method — common factoring, notable identity or third identity – and justify your choice.",
-        aspireToDo: "Advanced Factoring: Factorise completely the expression: $6x^4 - 5x^3 - 6x^2$. (Hint: Extract the greatest common factor $x^2$ first, then deploy splitting methods on the remaining non-monic structural bracket).",
+        mustDo: `
+            Quadratic models describe situations where the rate of change is itself changing — a ball thrown upward, a company's profit as a function of price, or the area of a rectangle with a fixed perimeter. To look inside these models, we must learn to solve their equations.
+            <br><br>
+            Factorisation is the process of rewriting an expression as a product of simpler factors. It is the reverse of expanding, and it serves as our first and most elegant tool for solving quadratic equations. When an expression factors cleanly, this method allows us to find solutions efficiently and mentally — far faster than using heavy algebraic formulas.
+            <br><br>
+            <h3>1. Common Factoring & Notable Identities</h3>
+            The absolute first step when factorising any mathematical expression is always to inspect the terms for a <strong>common factor</strong> — a single variable or numeric term that divides cleanly into every component of the expression. This technique utilizes the standard distributive property of multiplication in reverse:
+            <div class="math-block">$$ab + ac = a(b + c)$$</div>
+            Once any global common factors are extracted, we look for structural short-cuts. Certain algebraic expansions appear so frequently across mathematics that they are highly worth recognizing on sight. These predictable structures are called <strong>notable identities</strong>:
+            <ul>
+                <li><strong>Square of a sum:</strong> $a^2 + 2ab + b^2 = (a + b)^2$</li>
+                <li><strong>Square of a difference:</strong> $a^2 - 2ab + b^2 = (a - b)^2$</li>
+                <li><strong>Difference of squares:</strong> $a^2 - b^2 = (a - b)(a + b)$</li>
+            </ul>
+            <div class="tier-box" style="border: 1px solid var(--border); margin: 10px 0; background: #fff;">
+                <strong>Worked Example 1:</strong> Factorise $4x^4 + 2x^3 - 5x^2$.<br>
+                <em>Solution:</em> Each term contains $x^2$ as a common factor. Factoring this out gives:
+                <div class="math-block">$$4x^4 + 2x^3 - 5x^2 = x^2(4x^2 + 2x - 5)$$</div>
+                The remaining factor does not simplify further.
+            </div>
+            <div class="tier-box" style="border: 1px solid var(--border); margin: 10px 0; background: #fff;">
+                <strong>Worked Example 2:</strong> Factorise $16x^2 - 49$.<br>
+                <em>Solution:</em> We recognise the difference of squares pattern with $a = 4x$ and $b = 7$:
+                <div class="math-block">$$16x^2 - 49 = (4x)^2 - 7^2 = (4x - 7)(4x + 7)$$</div>
+            </div>
+            <h3>2. The Third Identity (Monic vs. Non-Monic)</h3>
+            When a quadratic expression is monic — meaning the coefficient of $x^2$ is exactly $1$ — we can bypass longer algebraic algorithms entirely. Instead, we can factorise the expression rapidly through inspection by looking for a specific arithmetic pattern.
+            <br><br>
+            To factorise a quadratic expression of the form $x^2 + bx + c$, we look for two numbers, $a$ and $b$, whose <strong>product</strong> equals the constant term $c$ and whose <strong>sum</strong> equals the middle coefficient $b$:
+            <div class="math-block">$$x^2 + (a + b)x + ab = (x + a)(x + b)$$</div>
+            <div class="tier-box" style="border: 1px solid var(--border); margin: 10px 0; background: #fff;">
+                <strong>Worked Example 3:</strong> Factorise $x^2 - 6x + 5$.<br>
+                <em>Solution:</em> We need two numbers $a$ and $b$ such that $a + b = -6$ and $ab = 5$. Testing: $a = -1$ and $b = -5$ gives $(-1) + (-5) = -6$ ✓ and $(-1)(-5) = 5$ ✓.<br>
+                Therefore:
+                <div class="math-block">$$x^2 - 6x + 5 = (x - 1)(x - 5)$$</div>
+            </div>
+            When the coefficient of $x^2$ is not $1$ and cannot be factored out cleanly, we use a method called <strong>factoring by grouping</strong>. Instead of guessing factors for the entire expression at once, we look for a way to split the middle term into two parts, allowing us to factor the polynomial in pairs.
+            <br><br>
+            To factorise a non-monic quadratic $ax^2 + bx + c$, find two numbers whose <strong>product</strong> equals $ac$ (the leading coefficient multiplied by the constant) and whose <strong>sum</strong> equals $b$:
+            <div class="math-block">$$\\text{Product} = a \\cdot c \\qquad \\text{and} \\qquad \\text{Sum} = b$$</div>
+            Once found, rewrite the middle term $bx$ using these two numbers and factorise the expression by grouping terms term by term.
+            <div class="tier-box" style="border: 1px solid var(--border); margin: 10px 0; background: #fff;">
+                <strong>Worked Example 4:</strong> Factorise $9x^2 + 24x + 7$.<br>
+                <em>Solution:</em> Since the leading coefficient is not $1$, we use the grouping method. We begin by looking for two numbers whose product equals $a \\cdot c$ ($9 \\cdot 7 = 63$) and whose sum equals $b$ ($24$). Testing factors of $63$, we find that $3$ and $21$ work perfectly because $3 \\cdot 21 = 63$ and $3 + 21 = 24$. We use these two numbers to split the middle term, $24x$, into two parts:
+                <div class="math-block">$$9x^2 + 3x + 21x + 7$$</div>
+                Next, we group the terms into pairs and factorise the greatest common factor out of each pair:
+                <div class="math-block">$$= 3x(3x + 1) + 7(3x + 1)$$</div>
+                Now, notice that both terms share a common binomial factor of $(3x + 1)$. Factoring this out gives our final simplified answer:
+                <div class="math-block">$$= (3x + 1)(3x + 7)$$</div>
+            </div>
+            <br>
+            <strong>🎯 MANDATORY BENCHMARK EXERCISES:</strong>
+            <br>
+            <strong>Exercise 1:</strong> Factorise each expression completely on your scratchpad:
+            <ul>
+                <li>a) $6x^2 - 7x$</li>
+                <li>c) $18x^4 - 8x^3 + 6x^2$</li>
+                <li>e) $x^2 - 9$</li>
+            </ul>
+            <strong>Exercise 2:</strong> Factorise the following expressions:
+            <ul>
+                <li>a) $x^2 + 7x + 6$</li>
+                <li>d) $25x^2 + 25x + 6$</li>
+            </ul>
+        `,
+        shouldDo: `
+            <strong>Exercise 1 & 2 Completion Room:</strong>
+            Factorise the remaining layout combinations from your packet notes:
+            <ul>
+                <li>Ex 1 (b): $12x^2 - 4x$</li>
+                <li>Ex 1 (d): $2x^5 - 10x^4 + 20x^3$</li>
+                <li>Ex 1 (f): $121 - 49x^2$</li>
+                <li>Ex 2 (b): $x^2 - 6x + 9$</li>
+                <li>Ex 2 (c): $3x^2 + 18x + 24$</li>
+                <li>Ex 2 (e): $36x^2 + 24x + 3$</li>
+            </ul>
+            <strong>Exercise 3 (Method Justification):</strong>
+            For each expression below, choose the most efficient method — common factoring, notable identity or third identity — and justify your choice explicitly on your paper before factorising:
+            <ul>
+                <li>a) $x^2 - 16$</li>
+                <li>b) $x^2 + 5x + 6$</li>
+                <li>c) $2x^2 + 8x$</li>
+                <li>d) $4x^2 - 12x + 9$</li>
+                <li>e) $x^2 + 3x - 10$</li>
+                <li>f) $4x^2 + 8x + 3$</li>
+            </ul>
+        `,
+        aspireToDo: `
+            <strong>Advanced Multi-Step Factoring Boss Challenge:</strong>
+            Factorise the following high-degree compound expressions completely by combining your extraction tools in multiple successive stages:
+            <br><br>
+            1. $\\quad 6x^4 - 5x^3 - 6x^2$ <br>
+            <em>(Hint: Extract the greatest common variable factor $x^2$ first, then apply non-monic product-sum splitting variables on the remaining core matrix bracket).</em>
+        `,
         quiz: {
-            question: "Factorise the non-monic quadratic expression completely: $9x^2 + 24x + 7$.",
+            question: "Factorise the non-monic expression completely from your notes: \(9x^2 + 24x + 7\).",
             options: [
-                "$(3x + 1)(3x + 7)$",
-                "$(9x + 1)(x + 7)$",
-                "$(3x - 1)(3x - 7)$",
-                "$x^2(9x + 24) + 7$"
+                "\((3x + 1)(3x + 7)\)",
+                "\((9x + 1)(x + 7)\)",
+                "\((3x - 1)(3x - 7)\)",
+                "\(x^2(9x + 24) + 7\)"
             ],
             correctIndex: 0
         }
