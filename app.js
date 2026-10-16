@@ -99,12 +99,11 @@ function renderCampaignMap() {
     });
 
     updateProgressBar();
-    if (window.MathJax && window.MathJax.typesetPromise) {
-        window.MathJax.typesetPromise();
-    }
+    // 🚀 Flush the MathJax cache immediately after appending the new elements
+    triggerMathCompilation();
 }
 
-// Global Validation Processor
+// Global Verification Processor
 window.evaluateAnswer = function(levelId, chosenIdx) {
     const level = levelsData.find(l => l.id === levelId);
     const feedbackZone = document.getElementById('quiz-feedback-' + levelId);
@@ -130,7 +129,6 @@ window.evaluateAnswer = function(levelId, chosenIdx) {
     }
 };
 
-// Progress metrics updater engine
 function updateProgressBar() {
     const total = levelsData.length;
     const completedCount = userProgress.completedLevels.length;
@@ -151,10 +149,16 @@ window.resetCampaign = function() {
     }
 };
 
-// 🔄 Robust Lifecycle Sync Engine
+// 🔄 Advanced Lifecycle Sync Engine with Cache Clearing
 function triggerMathCompilation() {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-        window.MathJax.typesetPromise().catch((err) => console.log('MathJax compiling: ', err));
+    if (window.MathJax) {
+        try {
+            // 🌟 Clear internal cache state so MathJax scans new innerHTML changes
+            window.MathJax.typesetClear();
+            window.MathJax.typesetPromise();
+        } catch (err) {
+            console.log('MathJax compiling error: ', err);
+        }
     }
 }
 
@@ -169,4 +173,3 @@ window.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', () => {
     triggerMathCompilation();
 });
-
