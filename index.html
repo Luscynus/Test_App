@@ -9,13 +9,18 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- MathJax Configuration for professional equation typesetting -->
+        <!-- 🧮 Clean MathJax Loading Hook -->
     <script>
         window.MathJax = {
-            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$']] },
-            svg: { fontCache: 'global' }
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$']]
+            }
         };
     </script>
-    <script id="MathJax-script" async src="https://jsdelivr.net"></script>
+    <script src="https://jsdelivr.net" defer></script>
+
+
 </head>
 <body>
 

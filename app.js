@@ -145,6 +145,7 @@ function saveState() {
     localStorage.setItem('quadratic_campaign_progress', JSON.stringify(userProgress));
 }
 
+// Development hard reset tool
 window.resetCampaign = function() {
     if(confirm("Are you sure you want to completely clear all progress variables? This action reverts all locks.")) {
         userProgress = { unlockedLevel: 1, completedLevels: [] };
@@ -153,11 +154,22 @@ window.resetCampaign = function() {
     }
 };
 
-// Fire fallback rendering if browser network blocks custom hooks
+// 🔄 Force MathJax to scan the entire updated layout map synchronously
+function applyMathTypesetting() {
+    if (window.MathJax && window.MathJax.typeset) {
+        window.MathJax.typeset();
+    }
+}
+
+// Build your card board as soon as the files finish reading
 window.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('reset-campaign-btn');
     if (resetBtn) resetBtn.addEventListener('click', window.resetCampaign);
-    if (!window.MathJax || !window.MathJax.startup) {
-        window.renderCampaignMap();
-    }
+    window.renderCampaignMap();
 });
+
+// Force a bulletproof second sweep the microsecond the network finishes downloading MathJax
+window.addEventListener('load', () => {
+    applyMathTypesetting();
+});
+
