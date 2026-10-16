@@ -1,29 +1,44 @@
-// Progressive Campaign State Management Configuration
-let userProgress = {
-    unlockedLevel: 1,
-    completedLevels: []
-};
-
-// Retrieve local storage state history if cached safely
-try {
-    if (localStorage.getItem('quadratic_campaign_progress')) {
-        userProgress = JSON.parse(localStorage.getItem('quadratic_campaign_progress'));
+const levelsData = [
+    {
+        id: 1,
+        chapter: "Section 4",
+        title: "Quadratic Models and Factorisation",
+        objectives: [
+            "Isolate global common algebraic factors from expressions using the distributive property in reverse.",
+            "Deploy notable identity structures, monic sum-product relationships, and non-monic grouping splits to factorise expressions."
+        ],
+        templateId: "level-1", 
+        quiz: {
+            question: "Factorise the non-monic expression completely from your notes: \(9x^2 + 24x + 7\).",
+            options: ["\((3x + 1)(3x + 7)\)", "\((9x + 1)(x + 7)\)", "\((3x - 1)(3x - 7)\)", "\(x^2(9x + 24) + 7\)"],
+            correctIndex: 0
+        }
     }
-} catch (e) {
-    console.log("Progress storage read error:", e);
+];
+
+let userProgress = { unlockedLevel: 1, completedLevels: [] };
+if (localStorage.getItem('quadratic_campaign_progress')) {
+    userProgress = JSON.parse(localStorage.getItem('quadratic_campaign_progress'));
 }
 
-// 🚀 Expose renderCampaignMap globally so it can be initiated reliably
-window.renderCampaignMap = function() {
+// 🌐 Load your text locker asynchronously behind the scenes
+function initAppEngine() {
+    fetch('s4.html')
+        .then(response => response.text())
+        .then(htmlContent => {
+            document.getElementById('curriculum-warehouse').innerHTML = htmlContent;
+            renderCampaignMap();
+        })
+        .catch(err => {
+            console.error("Critical curriculum load failure:", err);
+            document.getElementById('map-target').innerHTML = "<div class='locked-msg'><span>Error loading lesson files.</span></div>";
+        });
+}
+
+function renderCampaignMap() {
     const container = document.getElementById('map-target');
     if (!container) return;
     container.innerHTML = '';
-
-    // Check if data module loaded properly
-    if (typeof levelsData === 'undefined' || !Array.isArray(levelsData)) {
-        container.innerHTML = '<div class="locked-msg"><span>Error: Curriculum database (data.js) failed to load properly. Check your file links.</span></div>';
-        return;
-    }
 
     levelsData.forEach((level) => {
         const card = document.createElement('div');
@@ -64,6 +79,15 @@ window.renderCampaignMap = function() {
                 buttonsHTML += '<button class="quiz-option" onclick="evaluateAnswer(' + level.id + ',' + idx + ')">' + letter + ') ' + opt + '</button>';
             });
 
+            // Extract pristine LaTeX dynamically from our warehouse containers
+            const mustDoSource = document.getElementById(level.templateId + '-mustDo');
+            const shouldDoSource = document.getElementById(level.templateId + '-shouldDo');
+            const aspireSource = document.getElementById(level.templateId + '-aspireToDo');
+
+            const mustDoText = mustDoSource ? mustDoSource.innerHTML : "Lesson missing.";
+            const shouldDoText = shouldDoSource ? shouldDoSource.innerHTML : "Tasks missing.";
+            const aspireText = aspireSource ? aspireSource.innerHTML : "Challenge missing.";
+
             contentHTML += `
                 <div class="objectives">
                     <strong>🎯 Learning Objectives:</strong>
@@ -72,15 +96,15 @@ window.renderCampaignMap = function() {
                 <div class="task-sections">
                     <div class="tier-box tier-must">
                         <div class="tier-title">🟢 MUST-DO TASKS (Mandatory Benchmark)</div>
-                        <div>${level.mustDo}</div>
+                        <div>${mustDoText}</div>
                     </div>
                     <div class="tier-box tier-should">
                         <div class="tier-title">🔵 SHOULD-DO TASKS (Deepen Mastery)</div>
-                        <div>${level.shouldDo}</div>
+                        <div>${shouldDoText}</div>
                     </div>
                     <div class="tier-box tier-aspire">
                         <div class="tier-title">🟡 ASPIRE-TO-DO TASKS (Fast-Finisher Boss Room)</div>
-                        <div>${level.aspireToDo}</div>
+                        <div>${aspireText}</div>
                     </div>
                 </div>
             `;
@@ -110,37 +134,25 @@ window.renderCampaignMap = function() {
 
     updateProgressBar();
     applyMathTypesetting();
-};
+}
 
-// Global Verification Processor
 window.evaluateAnswer = function(levelId, chosenIdx) {
     const level = levelsData.find(l => l.id === levelId);
     const feedbackZone = document.getElementById('quiz-feedback-' + levelId);
-    if (!level || !feedbackZone) return;
-    
     if (chosenIdx === level.quiz.correctIndex) {
         feedbackZone.style.color = "var(--success)";
         feedbackZone.innerHTML = "✓ Correct! Mastery verified. Module unlocked.";
-        
-        if (!userProgress.completedLevels.includes(levelId)) {
-            userProgress.completedLevels.push(levelId);
-        }
-        
-        if (levelId === userProgress.unlockedLevel && userProgress.unlockedLevel < levelsData.length) {
-            userProgress.unlockedLevel = levelId + 1;
-        }
-
+        if (!userProgress.completedLevels.includes(levelId)) userProgress.completedLevels.push(levelId);
+        if (levelId === userProgress.unlockedLevel && userProgress.unlockedLevel < levelsData.length) userProgress.unlockedLevel = levelId + 1;
         saveState();
-        setTimeout(window.renderCampaignMap, 1200);
+        setTimeout(renderCampaignMap, 1200);
     } else {
         feedbackZone.style.color = "var(--danger)";
-        feedbackZone.innerHTML = "❌ Verification Failed. Review your whiteboard notes, check intermediate calculations, and try again! If stuck, report to the Guided Table.";
+        feedbackZone.innerHTML = "❌ Verification Failed. Review calculations and try again!";
     }
 };
 
-// Progressive Progress Layout Math Calculator
 function updateProgressBar() {
-    if (typeof levelsData === 'undefined' || !Array.isArray(levelsData)) return;
     const total = levelsData.length;
     const completedCount = userProgress.completedLevels.length;
     const percentage = Math.max(9, Math.round((completedCount / total) * 100));
@@ -148,40 +160,28 @@ function updateProgressBar() {
     if (progressBar) progressBar.style.width = percentage + '%';
 }
 
-// Local storage backup saver
-function saveState() {
-    localStorage.setItem('quadratic_campaign_progress', JSON.stringify(userProgress));
-}
+function saveState() { localStorage.setItem('quadratic_campaign_progress', JSON.stringify(userProgress)); }
 
-// System reset algorithm hook
 window.resetCampaign = function() {
-    if(confirm("Are you sure you want to completely clear all progress variables? This action reverts all locks.")) {
+    if(confirm("Reset progress variables?")) {
         userProgress = { unlockedLevel: 1, completedLevels: [] };
         saveState();
-        window.renderCampaignMap();
+        renderCampaignMap();
     }
 };
 
-// 🔄 Explicit, bulletproof manual compilation framework call
 function applyMathTypesetting() {
     if (window.MathJax && window.MathJax.typeset) {
-        try {
-            window.MathJax.typeset();
-        } catch (err) {
-            console.log("MathJax typesetting execution note:", err);
-        }
+        window.MathJax.typeset();
     }
 }
 
-// Synchronous application initialization triggers
 window.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('reset-campaign-btn');
     if (resetBtn) resetBtn.addEventListener('click', window.resetCampaign);
-    window.renderCampaignMap();
+    initAppEngine();
 });
 
-// Post-network download verification trigger sweep
 window.addEventListener('load', () => {
-    window.renderCampaignMap();
     applyMathTypesetting();
 });
