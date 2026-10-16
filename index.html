@@ -3,26 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Snippet Test</title>
+    <title>Forced Bright Snippet</title>
     
-    <!-- ⚡ Industry Standard Math Engine -->
+    <!-- ⚡ Math Engine Links -->
     <link rel="stylesheet" href="https://jsdelivr.net">
     <script src="https://jsdelivr.net" defer></script>
     <script src="https://jsdelivr.net" defer></script>
+
+    <style>
+        /* 🛑 Smash forced browser dark mode overrides */
+        html, body {
+            background-color: #ffffff !important;
+            color: #111111 !important;
+            color-scheme: light !important;
+        }
+    </style>
 </head>
-<body style="font-family: sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; line-height: 1.5;">
+<body style="font-family: sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; line-height: 1.5; background-color: #ffffff !important; color: #111111 !important;">
 
-    <h2>🟢 Snippet Step 1: Math Text Test</h2>
-    <p>We are checking if the browser reads the text and turns the signs between the dollar symbols into math notation.</p>
+    <h2>🟢 Snippet Step 1: Force Bright Render Test</h2>
+    <p>We are forcing a pure white background to smash through any browser dark-mode cache bugs.</p>
 
-    <!-- Formula block display test -->
-    <div style="background: #f1f5f9; padding: 15px; text-align: center; font-size: 1.25rem; border-radius: 6px; margin: 20px 0;">
+    <!-- Formula snippet container -->
+    <div style="background: #e2e8f0 !important; color: #111111 !important; padding: 15px; text-align: center; font-size: 1.25rem; border-radius: 6px; margin: 20px 0;">
         $$9x^2 + 24x + 7$$
     </div>
 
-    <p>Inline test: Let $a = 9$, $b = 24$, and $c = 7$.</p>
+    <p>Inline numbers test: Let $a = 9$, $b = 24$, and $c = 7$.</p>
 
-    <!-- Micro-compiler snippet -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             function runCompiler() {
