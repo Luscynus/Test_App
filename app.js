@@ -4,16 +4,26 @@ let userProgress = {
     completedLevels: []
 };
 
-// Retrieve local storage state history if cached
-if (localStorage.getItem('quadratic_campaign_progress')) {
-    userProgress = JSON.parse(localStorage.getItem('quadratic_campaign_progress'));
+// Retrieve local storage state history if cached safely
+try {
+    if (localStorage.getItem('quadratic_campaign_progress')) {
+        userProgress = JSON.parse(localStorage.getItem('quadratic_campaign_progress'));
+    }
+} catch (e) {
+    console.log("Progress storage read error:", e);
 }
 
-// 🚀 Expose renderCampaignMap globally so the MathJax engine can trigger it directly
+// 🚀 Expose renderCampaignMap globally so it can be initiated reliably
 window.renderCampaignMap = function() {
     const container = document.getElementById('map-target');
     if (!container) return;
     container.innerHTML = '';
+
+    // Check if data module loaded properly
+    if (typeof levelsData === 'undefined' || !Array.isArray(levelsData)) {
+        container.innerHTML = '<div class="locked-msg"><span>Error: Curriculum database (data.js) failed to load properly. Check your file links.</span></div>';
+        return;
+    }
 
     levelsData.forEach((level) => {
         const card = document.createElement('div');
@@ -23,15 +33,15 @@ window.renderCampaignMap = function() {
         let badgeText = 'Locked 🔒';
         let badgeClass = 'badge-locked';
 
-                if (userProgress.completedLevels.includes(level.id)) {
-                    statusClass = 'unlocked completed';
-                    badgeText = 'Mastered ✓';
-                    badgeClass = 'badge-completed';
-                } else if (level.id === userProgress.unlockedLevel) {
-                    statusClass = 'unlocked';
-                    badgeText = 'Active Quest ⚡';
-                    badgeClass = 'badge-unlocked';
-                }
+        if (userProgress.completedLevels.includes(level.id)) {
+            statusClass = 'unlocked completed';
+            badgeText = 'Mastered ✓';
+            badgeClass = 'badge-completed';
+        } else if (level.id === userProgress.unlockedLevel) {
+            statusClass = 'unlocked';
+            badgeText = 'Active Quest ⚡';
+            badgeClass = 'badge-unlocked';
+        }
 
         card.className = 'level-card ' + statusClass;
         
@@ -99,13 +109,8 @@ window.renderCampaignMap = function() {
     });
 
     updateProgressBar();
-    
-    // Compile elements immediately if MathJax finishes booting up early
-    if (window.MathJax && window.MathJax.typesetPromise) {
-        window.MathJax.typesetClear();
-        window.MathJax.typesetPromise();
-    }
-}
+    applyMathTypesetting();
+};
 
 // Global Verification Processor
 window.evaluateAnswer = function(levelId, chosenIdx) {
@@ -133,7 +138,9 @@ window.evaluateAnswer = function(levelId, chosenIdx) {
     }
 };
 
+// Progressive Progress Layout Math Calculator
 function updateProgressBar() {
+    if (typeof levelsData === 'undefined' || !Array.isArray(levelsData)) return;
     const total = levelsData.length;
     const completedCount = userProgress.completedLevels.length;
     const percentage = Math.max(9, Math.round((completedCount / total) * 100));
@@ -141,11 +148,12 @@ function updateProgressBar() {
     if (progressBar) progressBar.style.width = percentage + '%';
 }
 
+// Local storage backup saver
 function saveState() {
     localStorage.setItem('quadratic_campaign_progress', JSON.stringify(userProgress));
 }
 
-// Development hard reset tool
+// System reset algorithm hook
 window.resetCampaign = function() {
     if(confirm("Are you sure you want to completely clear all progress variables? This action reverts all locks.")) {
         userProgress = { unlockedLevel: 1, completedLevels: [] };
@@ -154,22 +162,26 @@ window.resetCampaign = function() {
     }
 };
 
-// 🔄 Force MathJax to scan the entire updated layout map synchronously
+// 🔄 Explicit, bulletproof manual compilation framework call
 function applyMathTypesetting() {
     if (window.MathJax && window.MathJax.typeset) {
-        window.MathJax.typeset();
+        try {
+            window.MathJax.typeset();
+        } catch (err) {
+            console.log("MathJax typesetting execution note:", err);
+        }
     }
 }
 
-// Build your card board as soon as the files finish reading
+// Synchronous application initialization triggers
 window.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('reset-campaign-btn');
     if (resetBtn) resetBtn.addEventListener('click', window.resetCampaign);
     window.renderCampaignMap();
 });
 
-// Force a bulletproof second sweep the microsecond the network finishes downloading MathJax
+// Post-network download verification trigger sweep
 window.addEventListener('load', () => {
+    window.renderCampaignMap();
     applyMathTypesetting();
 });
-
