@@ -9,8 +9,8 @@ const levelsData = [
         ],
         templateId: "level-1", 
         quiz: {
-            question: "Factorise the non-monic expression completely: \\(9x^2 + 24x + 7\\).",
-            options: ["\\((3x + 1)(3x + 7)\\)", "\\((9x + 1)(x + 7)\\)", "\\((3x - 1)(3x - 7)\\)", "\\(x^2(9x + 24) + 7\\)"],
+            question: "Factorise the non-monic expression completely: \(9x^2 + 24x + 7\).",
+            options: ["\((3x + 1)(3x + 7)\)", "\((9x + 1)(x + 7)\)", "\((3x - 1)(3x - 7)\)", "\(x^2(9x + 24) + 7\)"],
             correctIndex: 0
         }
     }
@@ -21,7 +21,7 @@ if (localStorage.getItem('quadratic_campaign_progress')) {
     userProgress = JSON.parse(localStorage.getItem('quadratic_campaign_progress'));
 }
 
-// 🌐 Pull layout text safely from the iframe window context
+// Pull layout text safely from the iframe window context
 window.initAppEngine = function() {
     try {
         const iframe = document.getElementById('curriculum-loader');
@@ -40,9 +40,9 @@ window.initAppEngine = function() {
             })
             .catch(fetchErr => {
                 document.getElementById('map-target').innerHTML = 
-                    "<div style='padding:20px; background:#fff3cd; border:2px solid #eab308; color:#a16207; border-radius:8px;'>" +
-                    "<h3>System Note: Loading Bridge Active</h3>" +
-                    "<p>Push your workspace code to GitHub to authorize the data channel live!</p>" +
+                    "<div style='padding:20px; background:#fff3cd; border:2px solid #eab308; color:#a16207; border-radius:8px;'> +" +
+                    "<h3>System Note: Data Bridge Active</h3>" +
+                    "<p>Push your workspace code to GitHub to authorize the live channel!</p>" +
                     "</div>";
             });
     }
@@ -182,13 +182,20 @@ window.resetCampaign = function() {
     }
 };
 
-// 🔄 Foolproof Asynchronous Typesetting Compiler
+// 🔄 Instant, Synchronous KaTeX Formatter Sweep
 function applyMathTypesetting() {
-    if (window.MathJax && window.MathJax.typesetPromise) {
-        window.MathJax.typesetPromise();
+    if (window.renderMathInElement) {
+        window.renderMathInElement(document.body, {
+            delimiters: [
+                {left: '\[', right: '\]', display: true},
+                {left: '\(', right: '\)', display: false},
+                {left: '\\(', right: '\\', display: false},
+                {left: '\\[', right: '\\]', display: true}
+            ],
+            throwOnError: false
+        });
     } else {
-        // Retry shortly if MathJax hasn't fully booted from CDN yet
-        setTimeout(applyMathTypesetting, 200);
+        setTimeout(applyMathTypesetting, 100);
     }
 }
 
