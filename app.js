@@ -130,6 +130,7 @@ window.evaluateAnswer = function(levelId, chosenIdx) {
     }
 };
 
+// Progress metrics updater engine
 function updateProgressBar() {
     const total = levelsData.length;
     const completedCount = userProgress.completedLevels.length;
@@ -150,9 +151,22 @@ window.resetCampaign = function() {
     }
 };
 
-// Hook up listener events cleanly when window context finishes parsing
+// 🔄 Robust Lifecycle Sync Engine
+function triggerMathCompilation() {
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        window.MathJax.typesetPromise().catch((err) => console.log('MathJax compiling: ', err));
+    }
+}
+
+// Fire rendering immediately when DOM is structured
 window.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('reset-campaign-btn');
     if (resetBtn) resetBtn.addEventListener('click', window.resetCampaign);
     renderCampaignMap();
 });
+
+// Force a second sweep the exact microsecond the MathJax framework finishes downloading online
+window.addEventListener('load', () => {
+    triggerMathCompilation();
+});
+
