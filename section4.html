@@ -11,6 +11,7 @@
             --neon-blue: #3b82f6;
             --neon-cyan: #06b6d4;
             --neon-green: #10b981;
+            --neon-amber: #f59e0b;
             --border-glow: #1e293b;
         }
         body {
@@ -41,7 +42,9 @@
         .box ul { margin: 10px 0; padding-left: 20px; }
         .box li { margin-bottom: 8px; }
         .example { border-left: 4px solid var(--neon-green); background-color: #0f2d22; padding: 15px; border-radius: 4px; margin: 15px 0; color: var(--text-main); }
+        .exercise-item { background: #1e293b; border: 1px solid #334155; padding: 12px; border-radius: 8px; color: var(--text-main); }
         .math-center { display: block; text-align: center; margin: 15px 0; font-size: 1.2rem; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 15px 0; }
     </style>
 </head>
 <body>
@@ -53,6 +56,7 @@
         <button class="tab-btn active" onclick="showSlide(1)">1. Overview</button>
         <button class="tab-btn" onclick="showSlide(2)">2. Core Identities</button>
         <button class="tab-btn" onclick="showSlide(3)">3. Worked Example</button>
+        <button class="tab-btn" onclick="showSlide(4)">4. Practice Set</button>
     </div>
 
     <!-- Slide 1: Overview -->
@@ -87,8 +91,21 @@
             <strong>Worked Example 1:</strong> Factorise <math><mn>4</mn><msup><mi>x</mi><mn>4</mn></msup><mo>+</mo><mn>2</mn><msup><mi>x</mi><mn>3</mn></msup><mo>−</mo><mn>5</mn><msup><mi>x</mi><mn>2</></math>.<br><br>
             <strong>Solution:</strong> Extract the common factor <math><msup><mi>x</mi><mn>2</mn></msup></math>:
             <div class="math-center">
-                <math><mo>=</mo><msup><mi>x</mi><2</2><mo stretchy="false">(</mo><mn>4</mn><msup><mi>x</mi><2</2><mo>+</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>5</mn><mo stretchy="false">)</mo></math>
+                <math><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo stretchy="false">(</mo><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn><mi>x</mi><mo>−</mo><mn>5</mn><mo stretchy="false">)</mo></math>
             </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Practice Set -->
+    <div class="slide-content" id="slide-4">
+        <h3 style="color: var(--neon-amber);">🏋️ Practice Exercises</h3>
+        <p>Solve these expressions in your workbook using common factoring, notable identities, or grouping:</p>
+        
+        <div class="grid-2">
+            <div class="exercise-item"><strong>1.</strong> <math><mn>6</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>7</mn><mi>x</math></div>
+            <div class="exercise-item"><strong>2.</strong> <math><mn>12</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>4</mn><mi>x</</math></div>
+            <div class="exercise-item"><strong>3.</strong> <math><mn>3</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>18</mn><mi>x</mi><mo>+</mo><mn>24</math></div>
+            <div class="exercise-item"><strong>4.</strong> <math><mn>4</mn><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mn>12</mn><mi>x</mi><mo>+</mo><mn>9</math></div>
         </div>
     </div>
 
