@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KaTeX Snippet Sync Test</title>
+    <title>Direct KaTeX Test</title>
     
-    <!-- ⚡ Synchronous KaTeX Loading (Guarantees availability before render) -->
+    <!-- ⚡ Core KaTeX Engine Styles and Script Only (No auto-render extension needed!) -->
     <link rel="stylesheet" href="https://cloudflare.com">
-    <script src="https://cloudflare.com"></script>
     <script src="https://cloudflare.com"></script>
 </head>
 <body style="background-color: #ffffff; color: #000000; padding: 30px; font-family: sans-serif; line-height: 1.5; max-width: 600px; margin: 0 auto;">
 
-    <h1 style="color: #2563eb;">🚀 Step 3: KaTeX Synchronous Test</h1>
-    <p>Checking if the equations convert into textbook formatting:</p>
+    <h1 style="color: #2563eb;">🚀 Step 4: Direct Element Target Test</h1>
+    <p>Bypassing text scanning regex filters. This method injects the formula straight into the ID target:</p>
 
-    <!-- Display Formula Block -->
-    <div id="math-target-block" style="background: #f1f5f9; padding: 20px; text-align: center; font-size: 1.4rem; border-radius: 8px; margin: 20px 0; border: 1px solid #cbd5e1;">
-        $$9x^2 + 24x + 7 = 0$$
-    </div>
+    <!-- 🎯 Direct target elements without any raw symbol delimiters -->
+    <div id="math-block-target" style="background: #f1f5f9; padding: 20px; text-align: center; font-size: 1.6rem; border-radius: 8px; margin: 20px 0; border: 1px solid #cbd5e1; min-height: 40px;"></div>
 
-    <p>Inline formula check: If $a = 9$, then the expression is active.</p>
+    <p>Inline formula test: Let <span id="math-inline-target"></span>, then the expression is active.</p>
 
     <!-- 📊 Diagnostic Status Tracker Box -->
     <div id="katex-status" style="margin-top: 40px; padding: 10px; font-family: monospace; font-size: 0.85rem; border-top: 1px solid #e2e8f0; color: #64748b;">
@@ -28,33 +25,37 @@
     </div>
 
     <script>
-        // Run immediately now that libraries are loaded synchronously
-        function compileMathSnippet() {
+        function runDirectRender() {
             const statusBox = document.getElementById('katex-status');
             
-            if (typeof window.renderMathInElement !== 'undefined') {
+            if (typeof window.katex !== 'undefined') {
                 try {
-                    window.renderMathInElement(document.body, {
-                        delimiters: [
-                            {left: '$$', right: '$$', display: true},
-                            {left: '$', right: '$', display: false}
-                        ],
+                    // 🎯 Inject block math straight into the element container by ID
+                    window.katex.render("9x^2 + 24x + 7 = 0", document.getElementById('math-block-target'), {
+                        displayMode: true,
                         throwOnError: false
                     });
-                    statusBox.innerHTML = "✅ Engine Status: KaTeX compiled successfully!";
+
+                    // 🎯 Inject inline math straight into the inline span by ID
+                    window.katex.render("a = 9", document.getElementById('math-inline-target'), {
+                        displayMode: false,
+                        throwOnError: false
+                    });
+
+                    statusBox.innerHTML = "✅ Engine Status: Direct targeted elements rendered successfully!";
                     statusBox.style.color = "#16a34a";
                 } catch (err) {
-                    statusBox.innerHTML = "❌ Engine Status: Compilation error - " + err.message;
+                    statusBox.innerHTML = "❌ Engine Status: Direct render error - " + err.message;
                     statusBox.style.color = "#dc2626";
                 }
             } else {
-                statusBox.innerHTML = "❌ Engine Status: KaTeX library not found in window context.";
+                statusBox.innerHTML = "❌ Engine Status: Core KaTeX library missing in window context.";
                 statusBox.style.color = "#dc2626";
             }
         }
 
-        // Trigger compilation on load
-        window.addEventListener('load', compileMathSnippet);
+        // Run as soon as everything loads
+        window.addEventListener('load', runDirectRender);
     </script>
 </body>
 </html>
