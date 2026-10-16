@@ -40,7 +40,7 @@ window.initAppEngine = function() {
             })
             .catch(fetchErr => {
                 document.getElementById('map-target').innerHTML = 
-                    "<div style='padding:20px; background:#fff3cd; border:2px solid #eab308; color:#a16207; border-radius:8px;'> +" +
+                    "<div style='padding:20px; background:#fff3cd; border:2px solid #eab308; color:#a16207; border-radius:8px;'>" +
                     "<h3>System Note: Data Bridge Active</h3>" +
                     "<p>Push your workspace code to GitHub to authorize the live channel!</p>" +
                     "</div>";
