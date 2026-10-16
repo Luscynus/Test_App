@@ -9,8 +9,8 @@ const levelsData = [
         ],
         templateId: "level-1", 
         quiz: {
-            question: "Factorise the non-monic expression completely from your notes: \(9x^2 + 24x + 7\).",
-            options: ["\((3x + 1)(3x + 7)\)", "\((9x + 1)(x + 7)\)", "\((3x - 1)(3x - 7)\)", "\(x^2(9x + 24) + 7\)"],
+            question: "Factorise the non-monic expression completely from your notes: \\(9x^2 + 24x + 7\\).",
+            options: ["\\((3x + 1)(3x + 7)\\)", "\\((9x + 1)(x + 7)\\)", "\\((3x - 1)(3x - 7)\\)", "\\(x^2(9x + 24) + 7\\)"],
             correctIndex: 0
         }
     }
@@ -23,15 +23,26 @@ if (localStorage.getItem('quadratic_campaign_progress')) {
 
 // 🌐 Load your text locker asynchronously behind the scenes
 function initAppEngine() {
-    fetch('s4.html')
-        .then(response => response.text())
+    fetch('./sections.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("HTTP error! Status: " + response.status);
+            }
+            return response.text();
+        })
         .then(htmlContent => {
             document.getElementById('curriculum-warehouse').innerHTML = htmlContent;
             renderCampaignMap();
         })
         .catch(err => {
             console.error("Critical curriculum load failure:", err);
-            document.getElementById('map-target').innerHTML = "<div class='locked-msg'><span>Error loading lesson files.</span></div>";
+            // 🚨 Print error directly to the container so you can see it visually!
+            document.getElementById('map-target').innerHTML = 
+                "<div style='padding: 20px; background: #fee2e2; border: 2px dashed #ef4444; color: #b91c1c; border-radius: 8px; margin-top: 20px; font-family: monospace;'>" +
+                "<h3>⚠️ Data Loading Failure:</h3>" +
+                "<p>" + err.message + "</p>" +
+                "<p><em>Tip: If testing on your local machine, open this via a VS Code Live Server or push to GitHub to bypass security cross-origin checks!</em></p>" +
+                "</div>";
         });
 }
 
@@ -84,9 +95,9 @@ function renderCampaignMap() {
             const shouldDoSource = document.getElementById(level.templateId + '-shouldDo');
             const aspireSource = document.getElementById(level.templateId + '-aspireToDo');
 
-            const mustDoText = mustDoSource ? mustDoSource.innerHTML : "Lesson missing.";
-            const shouldDoText = shouldDoSource ? shouldDoSource.innerHTML : "Tasks missing.";
-            const aspireText = aspireSource ? aspireSource.innerHTML : "Challenge missing.";
+            const mustDoText = mustDoSource ? mustDoSource.innerHTML : "Lesson data missing in sections.html.";
+            const shouldDoText = shouldDoSource ? shouldDoSource.innerHTML : "Tasks data missing in sections.html.";
+            const aspireText = aspireSource ? aspireSource.innerHTML : "Challenge data missing in sections.html.";
 
             contentHTML += `
                 <div class="objectives">
