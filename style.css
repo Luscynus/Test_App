@@ -135,3 +135,76 @@ body {
     gap: 10px;
     margin: 10px 0;
 }
+/* ─────────────────────────────────────────────────────────────────────────────
+   GAMIFIED CAMPAIGN COMPONENT INTERFACES
+   ───────────────────────────────────────────────────────────────────────────── */
+.campaign-card {
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.campaign-card.locked {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    opacity: 0.65;
+}
+
+.campaign-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.badge-active { background: #dbeafe; color: #1e40af; }
+.badge-mastered { background: #dcfce7; color: #14532d; }
+.badge-locked { background: #e2e8f0; color: #475569; }
+
+/* Interactive Verification Quiz Layout Elements */
+.quiz-box {
+    background: #f8fafc;
+    border: 2px dashed var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.2s;
+}
+.quiz-option:hover { background: #f1f5f9; }
+
+/* Progress Bar Components */
+.progress-wrapper {
+    background: var(--surface);
+    padding: 15px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin-bottom: 25px;
+}
+.bar-track { background: #e2e8f0; height: 10px; border-radius: 5px; margin-top: 8px; overflow: hidden; }
+.bar-fill { background: #2563eb; width: 0%; height: 100%; transition: width 0.4s ease; }
+.btn-reset { float: right; background: #ef4444; color: white; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }

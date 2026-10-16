@@ -4,18 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campaign Dashboard</title>
-    <!-- Attach your global cascading style rulesheet vector -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="dashboard-container">
         <h1 class="dashboard-title">📐 Campaign Dashboard</h1>
-        <p class="dashboard-subtitle">Course Curriculum Engine &bull; Section 4 Active Quest</p>
+        <p class="dashboard-subtitle">Course Curriculum Engine &bull; Math Interactive Hub</p>
 
-        <!-- Dynamic Viewport Content Window Interface Frame -->
-        <iframe src="section4.html" class="content-frame" frameborder="0"></iframe>
+        <!-- Progress Metrics Container Block -->
+        <div class="progress-wrapper">
+            <button class="btn-reset" onclick="resetCampaign()">Reset Progress</button>
+            <strong>Your Course Completion Metrics:</strong>
+            <div class="bar-track">
+                <div class="bar-fill" id="progress-fill"></div>
+            </div>
+        </div>
+
+        <!-- Section 4 Campaign Module Container -->
+        <div class="campaign-card" id="s4-card">
+            <div class="campaign-header">
+                <span style="font-size: 1.4rem; font-weight: 700;">Section 4 — Factorisation Module</span>
+                <span id="s4-badge" class="badge">Active Quest ⚡</span>
+            </div>
+
+            <!-- Native Content Visual Frame Window Component -->
+            <iframe src="section4.html" class="content-frame" style="height: 600px; min-height: auto;" frameborder="0"></iframe>
+
+            <!-- Gatekeeper Verification Interface Block -->
+            <div class="quiz-box" id="s4-quiz-zone">
+                <h4>🏁 Gatekeeper Verification Quiz</h4>
+                <p>Pass this question from your worksheet notes to authenticate mastery and lock in this objective!</p>
+                
+                <p><strong>Question:</strong> Factorise the non-monic expression completely: 
+                    <math><mn>9</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>24</mn><mi>x</mi><mo>+</mo><mn>7</mn></math>
+                </p>
+                
+                <div style="margin-top: 15px;">
+                    <button class="quiz-option" onclick="checkAnswer(0)">A) <math><mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>1</mo><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo>+</mo><mn>7</mn><mo stretchy="false">)</mo></math></button>
+                    <button class="quiz-option" onclick="checkAnswer(1)">B) <math><mo stretchy="false">(</mo><mn>9</mn><mi>x</mi><mo>+</mo><mn>1</mo><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mi>x</mi><mo>+</mo><mn>7</mo><mo stretchy="false">)</mo></button>
+                    <button class="quiz-option" onclick="checkAnswer(2)">C) <math><mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mo stretchy="false">(</mo><mn>3</mn><mi>x</mi><mo>−</mo><mn>7</mo><mo stretchy="false">)</mo></button>
+                    <button class="quiz-option" onclick="checkAnswer(3)">D) <math><msup><mi>x</mi><mn>2</mn></msup><mo stretchy="false">(</mo><mn>9</mn><mi>x</mi><mo>+</mo><mn>24</mo><mo stretchy="false">)</mo><mo>+</mo><mn>7</mo></math></button>
+                </div>
+                
+                <div id="quiz-feedback" style="margin-top:15px; font-weight:700; font-size:1.1rem;"></div>
+            </div>
+        </div>
     </div>
 
+    <!-- Engine Asset Execution Port -->
+    <script src="app.js"></script>
 </body>
 </html>
