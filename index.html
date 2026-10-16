@@ -3,30 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snippet Step 2: Cloudflare CDN Test</title>
+    <title>KaTeX Snippet Sync Test</title>
     
-    <!-- ⚡ Premium Global Cloudflare CDN Links (Bypasses jsDelivr lags) -->
+    <!-- ⚡ Synchronous KaTeX Loading (Guarantees availability before render) -->
     <link rel="stylesheet" href="https://cloudflare.com">
-    <script src="https://cloudflare.com" defer></script>
-    <script src="https://cloudflare.com" defer></script>
+    <script src="https://cloudflare.com"></script>
+    <script src="https://cloudflare.com"></script>
 </head>
-<body style="background-color: #ffffff; color: #000000; padding: 30px; font-family: sans-serif; line-height: 1.5;">
+<body style="background-color: #ffffff; color: #000000; padding: 30px; font-family: sans-serif; line-height: 1.5; max-width: 600px; margin: 0 auto;">
 
-    <h1 style="color: #2563eb;">🚀 Step 2: Cloudflare CDN Verification</h1>
-    <p>We switched to Cloudflare! Let's check if the page loads instantly and compiles the math expression cleanly:</p>
+    <h1 style="color: #2563eb;">🚀 Step 3: KaTeX Synchronous Test</h1>
+    <p>Checking if the equations convert into textbook formatting:</p>
 
-    <!-- Formula snippet container -->
-    <div style="background: #f1f5f9; padding: 20px; text-align: center; font-size: 1.4rem; border-radius: 8px; margin: 20px 0; border: 1px solid #cbd5e1;">
+    <!-- Display Formula Block -->
+    <div id="math-target-block" style="background: #f1f5f9; padding: 20px; text-align: center; font-size: 1.4rem; border-radius: 8px; margin: 20px 0; border: 1px solid #cbd5e1;">
         $$9x^2 + 24x + 7 = 0$$
     </div>
 
     <p>Inline formula check: If $a = 9$, then the expression is active.</p>
 
-    <!-- Micro-compiler routine -->
+    <!-- 📊 Diagnostic Status Tracker Box -->
+    <div id="katex-status" style="margin-top: 40px; padding: 10px; font-family: monospace; font-size: 0.85rem; border-top: 1px solid #e2e8f0; color: #64748b;">
+        Engine Status: Initializing...
+    </div>
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            function compileSnippetMath() {
-                if (window.renderMathInElement) {
+        // Run immediately now that libraries are loaded synchronously
+        function compileMathSnippet() {
+            const statusBox = document.getElementById('katex-status');
+            
+            if (typeof window.renderMathInElement !== 'undefined') {
+                try {
                     window.renderMathInElement(document.body, {
                         delimiters: [
                             {left: '$$', right: '$$', display: true},
@@ -34,12 +41,20 @@
                         ],
                         throwOnError: false
                     });
-                } else {
-                    setTimeout(compileSnippetMath, 50);
+                    statusBox.innerHTML = "✅ Engine Status: KaTeX compiled successfully!";
+                    statusBox.style.color = "#16a34a";
+                } catch (err) {
+                    statusBox.innerHTML = "❌ Engine Status: Compilation error - " + err.message;
+                    statusBox.style.color = "#dc2626";
                 }
+            } else {
+                statusBox.innerHTML = "❌ Engine Status: KaTeX library not found in window context.";
+                statusBox.style.color = "#dc2626";
             }
-            compileSnippetMath();
-        });
+        }
+
+        // Trigger compilation on load
+        window.addEventListener('load', compileMathSnippet);
     </script>
 </body>
 </html>
