@@ -6,6 +6,7 @@
     <title>Quadratic Models Challenge Campaign</title>
     <link rel="stylesheet" href="style.css">
     
+    <!-- 🧮 Clean MathJax Configuration -->
     <script>
         window.MathJax = {
             tex: {
@@ -17,6 +18,19 @@
     <script src="https://jsdelivr.net" defer></script>
 </head>
 <body>
+
+    <!-- 🚨 Immediate Top-Level Window Error Radar -->
+    <div id="critical-error-banner" style="display:none; margin:20px; padding:20px; background:#fee2e2; border:3px solid #ef4444; color:#b91c1c; font-family:monospace; border-radius:8px;">
+        <h3 style="margin:0 0 10px 0;">⚠️ JavaScript Compilation Error:</h3>
+        <p id="critical-error-text" style="margin:0; font-weight:bold;"></p>
+    </div>
+    <script>
+        window.onerror = function(msg, url, line) {
+            document.getElementById('critical-error-banner').style.display = 'block';
+            document.getElementById('critical-error-text').innerText = msg + '\nLine: ' + line + '\nFile: ' + url;
+            return false;
+        };
+    </script>
 
     <header>
         <h1>📐 Quadratic Models & Functions</h1>
@@ -35,7 +49,8 @@
         <div class="campaign-map" id="map-target"></div>
     </div>
 
-    <!-- Hidden parsing dock for asynchronous content -->
+    <!-- 📦 The Content Loading Pipeline: Loads sections.html smoothly without security blocks -->
+    <iframe src="s4.html" id="curriculum-loader" style="display: none;" onload="initAppEngine()"></iframe>
     <div id="curriculum-warehouse" style="display: none;"></div>
 
     <script src="app.js"></script>

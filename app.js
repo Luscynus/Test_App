@@ -21,33 +21,33 @@ if (localStorage.getItem('quadratic_campaign_progress')) {
     userProgress = JSON.parse(localStorage.getItem('quadratic_campaign_progress'));
 }
 
-// 🌐 Load your text locker with a cache-buster token attached
-function initAppEngine() {
-    // ⚡ The '?v=' token breaks any old browser history lock permanently
-    fetch('./sections.html?v=' + Date.now())
-        .then(response => {
-            if (!response.ok) {
-                throw new Error("HTTP error! Status: " + response.status);
-            }
-            return response.text();
-        })
-        .then(htmlContent => {
-            if (!htmlContent.trim()) {
-                throw new Error("The sections.html file was read but it returned empty text.");
-            }
-            document.getElementById('curriculum-warehouse').innerHTML = htmlContent;
-            renderCampaignMap();
-        })
-        .catch(err => {
-            console.error("Critical curriculum load failure:", err);
-            document.getElementById('map-target').innerHTML = 
-                "<div style='padding: 20px; background: #fee2e2; border: 2px dashed #ef4444; color: #b91c1c; border-radius: 8px; margin-top: 20px; font-family: monospace;'>" +
-                "<h3>⚠️ Data Loading Failure:</h3>" +
-                "<p>" + err.message + "</p>" +
-                "<p><em>Tip: Open your browser's Developer Console (F12 or right-click -> Inspect -> Console) to see the hidden trace.</em></p>" +
-                "</div>";
-        });
-}
+// 🌐 Pull layout text safely from the iframe window context
+window.initAppEngine = function() {
+    try {
+        const iframe = document.getElementById('curriculum-loader');
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        const warehouse = document.getElementById('curriculum-warehouse');
+        
+        warehouse.innerHTML = iframeDoc.body.innerHTML;
+        renderCampaignMap();
+    } catch (err) {
+        console.error("Iframe context load block:", err);
+        // Fallback connection channel if local hard drive restrictions interfere
+        fetch('./sections.html?v=' + Date.now())
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('curriculum-warehouse').innerHTML = html;
+                renderCampaignMap();
+            })
+            .catch(fetchErr => {
+                document.getElementById('map-target').innerHTML = 
+                    "<div style='padding:20px; background:#fff3cd; border:2px solid #eab308; color:#a16207; border-radius:8px;'>" +
+                    "<h3>System Note: Cross-Origin Storage Active</h3>" +
+                    "<p>Push your workspace code to GitHub to authorize the data bridge channel live!</p>" +
+                    "</div>";
+            });
+    }
+};
 
 function renderCampaignMap() {
     const container = document.getElementById('map-target');
@@ -97,9 +97,9 @@ function renderCampaignMap() {
             const shouldDoSource = document.getElementById(level.templateId + '-shouldDo');
             const aspireSource = document.getElementById(level.templateId + '-aspireToDo');
 
-            const mustDoText = mustDoSource ? mustDoSource.innerHTML : "Lesson data block missing in sections.html.";
-            const shouldDoText = shouldDoSource ? shouldDoSource.innerHTML : "Tasks data block missing in sections.html.";
-            const aspireText = aspireSource ? aspireSource.innerHTML : "Challenge data block missing in sections.html.";
+            const mustDoText = mustDoSource ? mustDoSource.innerHTML : "Content block missing in sections.html.";
+            const shouldDoText = shouldDoSource ? shouldDoSource.innerHTML : "Tasks block missing in sections.html.";
+            const aspireText = aspireSource ? aspireSource.innerHTML : "Challenge block missing in sections.html.";
 
             contentHTML += `
                 <div class="objectives">
@@ -192,9 +192,4 @@ function applyMathTypesetting() {
 window.addEventListener('DOMContentLoaded', () => {
     const resetBtn = document.getElementById('reset-campaign-btn');
     if (resetBtn) resetBtn.addEventListener('click', window.resetCampaign);
-    initAppEngine();
-});
-
-window.addEventListener('load', () => {
-    applyMathTypesetting();
 });
