@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Section 8 — Interactive Module</title>
+    
+    <!-- 🧮 LOAD KATEX MATHTYPESETTING ENGINE IN THE RIGHT PLACE -->
+    <link rel="stylesheet" href="https://jsdelivr.net">
+    <script defer src="https://jsdelivr.net"></script>
+    <script defer src="https://jsdelivr.net" onload="renderMathInElement(document.body);"></script>
+
     <style>
         /* ─────────────────────────────────────────────────────────────────────────────
            PREMIUM GRAPHICS ENGINE MATCHING DASHBOARD MATRIX
@@ -45,14 +51,13 @@
         
         .box { background-color: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 15px; margin: 15px 0; color: var(--text-main); }
         .example { border-left: 4px solid var(--neon-green); background-color: #0f2d22; padding: 15px; border-radius: 4px; margin: 15px 0; color: var(--text-main); }
-        .math-center { display: block; text-align: center; margin: 15px 0; font-size: 1.2rem; font-weight: bold; color: #ffffff; }
+        .math-center { display: block; text-align: center; margin: 15px 0; font-size: 1.25rem; color: #ffffff; }
         
         /* 🏋️ PRACTICE SET ELEMENTS */
         .exercise-block { background: #1e293b; border-left: 4px solid var(--neon-amber); padding: 15px; border-radius: 4px; margin-bottom: 20px; }
         .exercise-title { color: var(--text-main); font-weight: 700; margin-bottom: 12px; }
-        .exercise-item { background: #0f172a; border: 1px solid var(--border-glow); padding: 10px 14px; border-radius: 6px; color: var(--text-main); }
+        .exercise-item { background: #0f172a; border: 1px solid var(--border-glow); padding: 12px 14px; border-radius: 6px; color: var(--text-main); font-size: 1.05rem; }
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
     </style>
 </head>
 <body>
@@ -70,14 +75,14 @@
     <!-- Slide 1: Overview -->
     <div class="slide-content active" id="slide-1">
         <h3>Foundations of Functions</h3>
-        <p>A function <em>f</em> is a mathematical rule that links each element <em>x</em> from a starting set, called the <strong>Domain</strong> (D<sub>f</sub>), to exactly one element <em>y</em> inside a final set, called the <strong>Range</strong> (R<sub>f</sub>).</p>
+        <p>A function \(f\) is a mathematical rule that links each element \(x\) from a starting set, called the <strong>Domain</strong> (\(\mathcal{D}_f\)), to exactly one element \(y\) inside a final set, called the <strong>Range</strong> (\(\mathcal{R}_f\)).</p>
         
         <div class="box">
             <strong>Standard Function Families:</strong>
             <ul>
-                <li><strong>Linear Functions:</strong> f(x) = mx + p <br><span style="color:var(--text-muted); font-size:0.85rem;">Forms a straight line. D<sub>f</sub> = ℝ, R<sub>f</sub> = ℝ.</span></li>
-                <li><strong>Quadratic Functions:</strong> f(x) = ax<sup>2</sup> + bx + c <br><span style="color:var(--text-muted); font-size:0.85rem;">Forms a parabola. Vertex occurs at: x<sub>vertex</sub> = −b / 2a.</span></li>
-                <li><strong>Reciprocal Function:</strong> f(x) = 1 / x <br><span style="color:var(--text-muted); font-size:0.85rem;">Forms a hyperbola with a vertical break at x = 0.</span></li>
+                <li><strong>Linear Functions:</strong> \(f(x) = mx + p\) <br><span style="color:var(--text-muted); font-size:0.85rem;">Forms a straight line. \(\mathcal{D}_f = \mathbb{R}\), \(\mathcal{R}_f = \mathbb{R}\).</span></li>
+                <li><strong>Quadratic Functions:</strong> \(f(x) = ax^2 + bx + c\) <br><span style="color:var(--text-muted); font-size:0.85rem;">Forms a parabola. Vertex occurs at: \(x_{\text{vertex}} = -\frac{b}{2a}\).</span></li>
+                <li><strong>Reciprocal Function:</strong> \(f(x) = \frac{1}{x}\) <br><span style="color:var(--text-muted); font-size:0.85rem;">Forms a hyperbola with a vertical break at \(x = 0\).</span></li>
             </ul>
         </div>
     </div>
@@ -89,8 +94,8 @@
         
         <div class="box">
             <ul>
-                <li><strong>1. Fractions and Denominators:</strong> The denominator of a fraction can never be equal to zero.<br><span style="color:var(--neon-cyan);">Rule: 1 / g(x) ⇒ g(x) ≠ 0</span></li>
-                <li style="margin-top: 15px;"><strong>2. Square Roots:</strong> The expression inside an even square root radical must always be greater than or equal to zero.<br><span style="color:var(--neon-cyan);">Rule: √g(x) ⇒ g(x) ≥ 0</span></li>
+                <li><strong>1. Fractions and Denominators:</strong> The denominator of a fraction can never be equal to zero.<br><span style="color:var(--neon-cyan); font-weight: bold;">Rule: \(\frac{1}{g(x)} \implies g(x) \neq 0\)</span></li>
+                <li style="margin-top: 15px;"><strong>2. Square Roots:</strong> The expression inside an even square root radical must always be greater than or equal to zero.<br><span style="color:var(--neon-cyan); font-weight: bold;">Rule: \(\sqrt{g(x)} \implies g(x) \geq 0\)</span></li>
             </ul>
         </div>
     </div>
@@ -100,22 +105,22 @@
         <h3>Demonstration Masterclass</h3>
         
         <div class="example">
-            <strong>Example 8.1:</strong> Find the domain D<sub>f</sub> for f(x) = √(x + 4) / (2x − 6).<br><br>
+            <strong>Example 8.1:</strong> Find the domain \(\mathcal{D}_f\) for \(f(x) = \frac{\sqrt{x + 4}}{2x - 6}\).<br><br>
             <strong>Solution steps:</strong>
             <ol>
-                <li>Apply square root rule on numerator: x + 4 ≥ 0 ⇒ <strong>x ≥ −4</strong></li>
-                <li>Apply denominator rule on bottom: 2x − 6 ≠ 0 ⇒ <strong>x ≠ 3</strong></li>
-                <li>Combine boundaries into clean intervals: <strong>D<sub>f</sub> = [−4, 3) ∪ (3, +∞)</strong></li>
+                <li>Apply square root rule on numerator: \(x + 4 \geq 0 \implies x \geq -4\)</li>
+                <li>Apply denominator rule on bottom: \(2x - 6 \neq 0 \implies x \neq 3\)</li>
+                <li>Combine boundaries into clean intervals: <span style="color: var(--neon-green); font-weight: bold;">\(\mathcal{D}_f = [-4, 3) \cup (3, +x)\)</span></li>
             </ol>
         </div>
 
         <div class="example" style="border-left-color: var(--neon-cyan); background-color: #0c1e36;">
-            <strong>Example 8.2:</strong> Find the vertex coordinates and range R<sub>f</sub> for f(x) = x<sup>2</sup> − 6x + 5.<br><br>
+            <strong>Example 8.2:</strong> A quadratic function is given by the formula \(f(x) = x^2 - 6x + 5\). Find the coordinates of its vertex and determine its range \(\mathcal{R}_f\).<br><br>
             <strong>Solution steps:</strong>
             <ol>
-                <li>Calculate x<sub>vertex</sub> = −b / 2a = −(−6) / 2(1) = <strong>3</strong></li>
-                <li>Substitute back to get y: f(3) = (3)<sup>2</sup> − 6(3) + 5 = 9 − 18 + 5 = <strong>−4</strong></li>
-                <li>Since a > 0 opens up, the vertex minimum locks the interval at: <strong>R<sub>f</sub> = [−4, +∞)</strong></li>
+                <li>Calculate \(x_{\text{vertex}} = -\frac{b}{2a} = -\frac{-6}{2(1)} = 3\)</li>
+                <li>Substitute back to find lowest \(y\)-value: \(f(3) = (3)^2 - 6(3) + 5 = -4\)</li>
+                <li>Since \(a > 0\) opens up, the vertex minimum locks the range interval at: <span style="color: var(--neon-cyan); font-weight: bold;">\(\mathcal{R}_f = [-4, +x)\)</span></li>
             </ol>
         </div>
     </div>
@@ -129,27 +134,27 @@
         <div class="exercise-block">
             <div class="exercise-title">Exercise 8.1: Find the exact domain interval notation.</div>
             <div class="grid-2">
-                <div class="exercise-item">a) f(x) = 5 / (3x − 12)</div>
-                <div class="exercise-item">b) f(x) = √(2x + 8)</div>
-                <div class="exercise-item">c) f(x) = √(x − 2) / (x − 5)</div>
-                <div class="exercise-item">d) f(x) = 1 / (x<sup>2</sup> − 9)</div>
-                <div class="exercise-item">e) f(x) = 7 / √(6 − 2x)</div>
-                <div class="exercise-item">f) f(x) = √(x + 1) + √(4 − x)</div>
+                <div class="exercise-item">a) \(f(x) = \frac{5}{3x - 12}\)</div>
+                <div class="exercise-item">b) \(f(x) = \sqrt{2x + 8}\)</div>
+                <div class="exercise-item">c) \(f(x) = \frac{\sqrt{x - 2}}{x - 5}\)</div>
+                <div class="exercise-item">d) \(f(x) = \frac{1}{x^2 - 9}\)</div>
+                <div class="exercise-item">e) \(f(x) = \frac{7}{\sqrt{6 - 2x}}\)</div>
+                <div class="exercise-item">f) \(f(x) = \sqrt{x + 1} + \sqrt{4 - x}\)</div>
             </div>
         </div>
 
         <!-- Exercise 8.2 -->
         <div class="exercise-block" style="border-left-color: var(--neon-green);">
             <div class="exercise-title" style="color: var(--text-main);">⭐ Milestone Gate Check Challenge (Exercise 8.2)</div>
-            <p style="font-size:0.85rem; margin-top:0; color:var(--text-muted);">Find the complete vertex coordinates (x, y) and state the range for each:</p>
+            <p style="font-size:0.85rem; margin-top:0; color:var(--text-muted);">Find the complete vertex coordinates \((x, y)\) and state the range for each:</p>
             <div class="grid-2">
                 <div class="exercise-item" style="border-color: var(--neon-green);">
-                    <strong>a) f(x) = x<sup>2</sup> − 4x + 7</strong><br>
-                    <span style="font-size:0.8rem; color:var(--text-muted);">Tip: Note down your final vertex y-value...</span>
+                    <strong>a) \(f(x) = x^2 - 4x + 7\)</strong><br>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Tip: Calculate and note down your final vertex \(y\)-value...</span>
                 </div>
                 <div class="exercise-item" style="border-color: var(--neon-green);">
-                    <strong>b) f(x) = −x<sup>2</sup> − 2x + 3</strong><br>
-                    <span style="font-size:0.8rem; color:var(--text-muted);">Tip: Note down your final vertex y-value...</span>
+                    <strong>b) \(f(x) = -x^2 - 2x + 3\)</strong><br>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Tip: Calculate and note down your final vertex \(y\)-value...</span>
                 </div>
             </div>
         </div>
@@ -158,9 +163,9 @@
         <div class="exercise-block" style="border-left-color: var(--neon-blue);">
             <div class="exercise-title">Exercise 8.3: Domain analysis.</div>
             <div class="exercise-item">
-                Given f(x) = √(x + 2) / (x − 1):<br>
-                a) Compute the complete interval domain.<br>
-                b) Graph the intervals onto a standard real line workspace.
+                Given \(f(x) = \frac{\sqrt{x + 2}}{x - 1}\):<br><br>
+                a) Compute the complete interval domain \(\mathcal{D}_f\).<br>
+                b) Show this domain visually by drawing its intervals directly onto a standard real line workspace.
             </div>
         </div>
     </div>
@@ -170,8 +175,8 @@
             document.querySelectorAll('.slide-content').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById('slide-' + slideId).classList.add('active');
-            if (event && event.currentTarget) {
-                event.currentTarget.classList.add('active');
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('active');
             }
         }
     </script>
