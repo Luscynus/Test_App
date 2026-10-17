@@ -305,33 +305,57 @@
             gameState.currentActiveLevel = levelId;
             saveEngineState();
 
-            if (levelId === 1) {
+                        if (levelId === 1) {
                 viewport.innerHTML = `
-                    <iframe src="section4.html" class="content-iframe"></iframe>
+                    <iframe src="section8.html" class="content-iframe"></iframe>
                     
                     <div class="quiz-box">
-                        <h4 style="margin-top:0; color:var(--neon-amber);">🏁 Gateway Validation Verification Check</h4>
-                        <p>Complete this multiple-choice tracking node from your lesson text answers to clear the pathway layout coordinates:</p>
-                        <p><strong>Question:</strong> What are the complete binomial grouping factors for your workbook example: <math><mn>9</mn><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>24</mn><mi>x</mi><mo>+</mo><mn>7</mn></math>?</p>
+                        <h4 style="margin-top:0; color:var(--neon-amber);">🏁 Section 8 Verification Check</h4>
+                        <p>Complete your mandatory workbook exercises. To unlock the next milestone, combine the <strong>y-coordinates of the vertices</strong> you calculated in Exercise 8.2:</p>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; font-style: italic;">Format: Enter your two numbers back-to-back with no spaces (e.g., 72).</p>
                         
-                        <button class="quiz-choice" onclick="evaluateGatewayAnswer(0, false)">A) (9x + 1)(x + 7)</button>
-                        <button class="quiz-choice" onclick="evaluateGatewayAnswer(1, true)">B) (3x + 1)(3x + 7)</button>
-                        <button class="quiz-choice" onclick="evaluateGatewayAnswer(2, false)">C) (3x - 7)²</button>
+                        <div style="display: flex; gap: 10px; margin-top: 15px;">
+                            <input type="text" id="composite-key-input" placeholder="Enter composite code..." autocomplete="off" style="background: #0f172a; border: 1px solid #334155; color: var(--text-main); padding: 10px; border-radius: 8px; font-size: 1rem; width: 200px;">
+                            <button class="btn-action" onclick="verifyCompositeKey()">Submit Verification</button>
+                        </div>
                         <div id="quiz-feedback-box" style="margin-top:15px; font-weight:700;"></div>
                     </div>
                 `;
             } else if (levelId === 2) {
                 viewport.innerHTML = `
-                    <h2 style="color: var(--neon-green); margin-top:0;">🏆 Waypoint Clear: Objectives Mastered</h2>
-                    <p style="color: var(--text-muted);">You have successfully verified your proficiency metrics in non-monic factorization grouping matrices.</p>
-                    <div style="background:#1e293b; border:1px solid #334155; padding:20px; border-radius:12px; margin-top:20px;">
-                        <h3 style="color: var(--neon-cyan); margin-top:0;">📚 Active Project File Status Tracker</h3>
-                        <p style="margin-bottom:0;">All external structures are responding cleanly. Continue completing worksheet templates inside your local notebook folders.</p>
+                    <iframe src="section9.html" class="content-iframe"></iframe>
+                    
+                    <div class="quiz-box">
+                        <h4 style="margin-top:0; color:var(--neon-amber);">🏁 Section 9 Verification Check</h4>
+                        <p>Complete your mandatory written work for composite and inverse models to clear the tracking coordinates.</p>
+                        <!-- We will add the input key checker here once section9.html is ready! -->
                     </div>
                 `;
             }
             syncUserInterface();
         };
+
+        window.verifyCompositeKey = function() {
+            const inputVal = document.getElementById('composite-key-input').value.trim();
+            const feedBox = document.getElementById('quiz-feedback-box');
+            
+            // Secret key is '34' (y=3 from ex 8.2a and y=4 from ex 8.2b)
+            if (inputVal === "34") {
+                feedBox.style.color = "var(--neon-green)";
+                feedBox.textContent = "✓ Key Validated! Section 8 Complete. Waypoint 9 Unlocked.";
+                
+                if (!gameState.completedLevels.includes(1)) gameState.completedLevels.push(1);
+                gameState.highestUnlocked = 2;
+                gameState.currentActiveLevel = 2;
+                
+                saveEngineState();
+                setTimeout(() => { switchLevelView(2); }, 1500);
+            } else {
+                feedBox.style.color = "var(--neon-danger)";
+                feedBox.textContent = "❌ Invalid verification key. Check your workbook calculations and try again.";
+            }
+        };
+
 
         window.evaluateGatewayAnswer = function(chosenIndex, isCorrect) {
             const feedBox = document.getElementById('quiz-feedback-box');

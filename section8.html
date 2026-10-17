@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Section 8 — Interactive Module</title>
+    <style>
+        /* ─────────────────────────────────────────────────────────────────────────────
+           PREMIUM GRAPHICS ENGINE MATCHING DASHBOARD MATRIX
+           ───────────────────────────────────────────────────────────────────────────── */
+        :root {
+            --bg-surface: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --neon-blue: #3b82f6;
+            --neon-cyan: #06b6d4;
+            --neon-green: #10b981;
+            --neon-amber: #f59e0b;
+            --border-glow: #1e293b;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin: 0;
+            padding: 10px;
+            background-color: transparent;
+        }
+        h2 { color: var(--text-main); border-bottom: 1px solid var(--border-glow); padding-bottom: 8px; margin-top: 0; }
+        h3 { color: var(--neon-blue); margin-top: 20px; font-size: 1.25rem; }
+        p { text-align: justify; margin: 12px 0; }
+        ul { margin: 10px 0; padding-left: 20px; }
+        li { margin-bottom: 8px; }
+        
+        /* 📑 SLIDE DECK NAVIGATION TABS */
+        .tab-nav { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab-btn {
+            background: #1e293b; color: var(--text-muted); border: 1px solid var(--border-glow);
+            padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: all 0.2s;
+        }
+        .tab-btn.active { background: var(--neon-blue); color: #090d16; border-color: var(--neon-blue); box-shadow: 0 0 10px rgba(59,130,246,0.4); }
+        
+        /* 🎴 LAYOUT SLIDE BOXES */
+        .slide-content { display: none; background: #111827; border: 1px solid var(--border-glow); padding: 20px; border-radius: 12px; box-shadow: inset 0 0 20px rgba(0,0,0,0.4); }
+        .slide-content.active { display: block; }
+        
+        .box { background-color: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 15px; margin: 15px 0; color: var(--text-main); }
+        .example { border-left: 4px solid var(--neon-green); background-color: #0f2d22; padding: 15px; border-radius: 4px; margin: 15px 0; color: var(--text-main); }
+        .math-center { display: block; text-align: center; margin: 15px 0; font-size: 1.2rem; font-weight: bold; color: #ffffff; }
+        
+        /* 🏋️ PRACTICE SET ELEMENTS */
+        .exercise-block { background: #1e293b; border-left: 4px solid var(--neon-amber); padding: 15px; border-radius: 4px; margin-bottom: 20px; }
+        .exercise-title { color: var(--text-main); font-weight: 700; margin-bottom: 12px; }
+        .exercise-item { background: #0f172a; border: 1px solid var(--border-glow); padding: 10px 14px; border-radius: 6px; color: var(--text-main); }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    </style>
+</head>
+<body>
+
+    <h2>Section 8 — Introduction to Functions, Domain &amp; Range</h2>
+    
+    <!-- Step Controls -->
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="showSlide(1)">1. Overview</button>
+        <button class="tab-btn" onclick="showSlide(2)">2. Domain Rules</button>
+        <button class="tab-btn" onclick="showSlide(3)">3. Worked Examples</button>
+        <button class="tab-btn" onclick="showSlide(4)">4. Practice Set</button>
+    </div>
+
+    <!-- Slide 1: Overview -->
+    <div class="slide-content active" id="slide-1">
+        <h3>Foundations of Functions</h3>
+        <p>A function <em>f</em> is a mathematical rule that links each element <em>x</em> from a starting set, called the <strong>Domain</strong> (D<sub>f</sub>), to exactly one element <em>y</em> inside a final set, called the <strong>Range</strong> (R<sub>f</sub>).</p>
+        
+        <div class="box">
+            <strong>Standard Function Families:</strong>
+            <ul>
+                <li><strong>Linear Functions:</strong> f(x) = mx + p <br><span style="color:var(--text-muted); font-size:0.85rem;">Forms a straight line. D<sub>f</sub> = ℝ, R<sub>f</sub> = ℝ.</span></li>
+                <li><strong>Quadratic Functions:</strong> f(x) = ax<sup>2</sup> + bx + c <br><span style="color:var(--text-muted); font-size:0.85rem;">Forms a parabola. Vertex occurs at: x<sub>vertex</sub> = −b / 2a.</span></li>
+                <li><strong>Reciprocal Function:</strong> f(x) = 1 / x <br><span style="color:var(--text-muted); font-size:0.85rem;">Forms a hyperbola with a vertical break at x = 0.</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 2: Domain Rules -->
+    <div class="slide-content" id="slide-2">
+        <h3>Finding Domain Constraints</h3>
+        <p>When working with real numbers, you must look out for two main structural limitations that break algebraic domains:</p>
+        
+        <div class="box">
+            <ul>
+                <li><strong>1. Fractions and Denominators:</strong> The denominator of a fraction can never be equal to zero.<br><span style="color:var(--neon-cyan);">Rule: 1 / g(x) ⇒ g(x) ≠ 0</span></li>
+                <li style="margin-top: 15px;"><strong>2. Square Roots:</strong> The expression inside an even square root radical must always be greater than or equal to zero.<br><span style="color:var(--neon-cyan);">Rule: √g(x) ⇒ g(x) ≥ 0</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slide 3: Worked Examples -->
+    <div class="slide-content" id="slide-3">
+        <h3>Demonstration Masterclass</h3>
+        
+        <div class="example">
+            <strong>Example 8.1:</strong> Find the domain D<sub>f</sub> for f(x) = √(x + 4) / (2x − 6).<br><br>
+            <strong>Solution steps:</strong>
+            <ol>
+                <li>Apply square root rule on numerator: x + 4 ≥ 0 ⇒ <strong>x ≥ −4</strong></li>
+                <li>Apply denominator rule on bottom: 2x − 6 ≠ 0 ⇒ <strong>x ≠ 3</strong></li>
+                <li>Combine boundaries into clean intervals: <strong>D<sub>f</sub> = [−4, 3) ∪ (3, +∞)</strong></li>
+            </ol>
+        </div>
+
+        <div class="example" style="border-left-color: var(--neon-cyan); background-color: #0c1e36;">
+            <strong>Example 8.2:</strong> Find the vertex coordinates and range R<sub>f</sub> for f(x) = x<sup>2</sup> − 6x + 5.<br><br>
+            <strong>Solution steps:</strong>
+            <ol>
+                <li>Calculate x<sub>vertex</sub> = −b / 2a = −(−6) / 2(1) = <strong>3</strong></li>
+                <li>Substitute back to get y: f(3) = (3)<sup>2</sup> − 6(3) + 5 = 9 − 18 + 5 = <strong>−4</strong></li>
+                <li>Since a > 0 opens up, the vertex minimum locks the interval at: <strong>R<sub>f</sub> = [−4, +∞)</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 4: Practice Set -->
+    <div class="slide-content" id="slide-4">
+        <h3 style="color: var(--neon-amber); margin-top: 0;">🏋️ Mandatory Written Exercises</h3>
+        <p>Complete these target checkpoints step-by-step inside your physical workbook or iPad canvas:</p>
+        
+        <!-- Exercise 8.1 -->
+        <div class="exercise-block">
+            <div class="exercise-title">Exercise 8.1: Find the exact domain interval notation.</div>
+            <div class="grid-2">
+                <div class="exercise-item">a) f(x) = 5 / (3x − 12)</div>
+                <div class="exercise-item">b) f(x) = √(2x + 8)</div>
+                <div class="exercise-item">c) f(x) = √(x − 2) / (x − 5)</div>
+                <div class="exercise-item">d) f(x) = 1 / (x<sup>2</sup> − 9)</div>
+                <div class="exercise-item">e) f(x) = 7 / √(6 − 2x)</div>
+                <div class="exercise-item">f) f(x) = √(x + 1) + √(4 − x)</div>
+            </div>
+        </div>
+
+        <!-- Exercise 8.2 -->
+        <div class="exercise-block" style="border-left-color: var(--neon-green);">
+            <div class="exercise-title" style="color: var(--text-main);">⭐ Milestone Gate Check Challenge (Exercise 8.2)</div>
+            <p style="font-size:0.85rem; margin-top:0; color:var(--text-muted);">Find the complete vertex coordinates (x, y) and state the range for each:</p>
+            <div class="grid-2">
+                <div class="exercise-item" style="border-color: var(--neon-green);">
+                    <strong>a) f(x) = x<sup>2</sup> − 4x + 7</strong><br>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Tip: Note down your final vertex y-value...</span>
+                </div>
+                <div class="exercise-item" style="border-color: var(--neon-green);">
+                    <strong>b) f(x) = −x<sup>2</sup> − 2x + 3</strong><br>
+                    <span style="font-size:0.8rem; color:var(--text-muted);">Tip: Note down your final vertex y-value...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercise 8.3 -->
+        <div class="exercise-block" style="border-left-color: var(--neon-blue);">
+            <div class="exercise-title">Exercise 8.3: Domain analysis.</div>
+            <div class="exercise-item">
+                Given f(x) = √(x + 2) / (x − 1):<br>
+                a) Compute the complete interval domain.<br>
+                b) Graph the intervals onto a standard real line workspace.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSlide(slideId) {
+            document.querySelectorAll('.slide-content').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('slide-' + slideId).classList.add('active');
+            if (event && event.currentTarget) {
+                event.currentTarget.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
