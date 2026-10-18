@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section 5: Introduction to Derivatives &amp; Tangents</title>
+    <!-- Linked to your cleaned global stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Unified Section Headline -->
+    <h2>5. Introduction to Derivatives &amp; Tangents</h2>
+
+    <!-- Optimized 6-Step Navigation Deck Layout -->
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="showSlide(1)">1. Ski Run</button>
+        <button class="tab-btn" onclick="showSlide(2)">2. The Derivative</button>
+        <button class="tab-btn" onclick="showSlide(3)">3. The Tangent Line</button>
+        <button class="tab-btn" onclick="showSlide(4)">4. Worked Examples</button>
+        <button class="tab-btn" onclick="showSlide(5)">5. Practice Set</button>
+        <button class="tab-btn" style="border-color: var(--neon-amber); color: var(--neon-amber);" onclick="showSlide(6)">6. Milestone Unlock</button>
+    </div>
+
+
+    <!-- SLIDE 1: 🎿 THE SKI RUN (CONSOLIDATED SANDBOX & CRASH) -->
+    <div class="slide-content active" id="slide-1">
+        <div class="split-grid">
+            <div id="slide1-content-box">
+            <h3>From Average Rate to System Collapse</h3>
+            <p>Imagine tracking a skier accelerating down a smooth half-pipe slope. The total distance they have traveled down the track (in meters) over time (in seconds) is modeled by the steep quadratic curve <span class="math-inline">f(t) = t²</span>.</p>
+                
+                <p>We lock our starting point of analysis at **Point A** (at time <span class="math-inline">t = 1.0</span> second).</p>
+
+                <div class="example">
+                    <strong>🎯 Guided Discovery Task:</strong>
+                    <p style="margin: 6px 0;">Slowly drag the controller slider from right to left to bring <strong>Point B</strong> closer to Point A. Notice the physical transition:</p>
+                    <ul style="margin: 4px 0 0 0; padding-left: 20px;">
+                        <li><strong>Wide Zone (<span class="math-inline">t > 1.5s</span>):</strong> The straight pink line (the <em>secant line</em>) safely measures the **Average Speed**.</li>
+                        <li><strong>Micro Zone (<span class="math-inline">t</span> approaching 1.0s):</strong> The time window shrinks to a hair. Look at the ratio box—what specific speed number does the average value seem to stabilize around?</li>
+                        <li><strong>Collision (<span class="math-inline">t = 1.00s</span>):</strong> The points overlap completely.</li>
+                    </ul>
+                </div>
+
+                <div class="box" style="background-color: #090d16;">
+                    <strong style="color: var(--neon-amber);">🕹️ Temporal Interval Controller</strong>
+                    <p style="font-size: 0.85rem; margin: 4px 0 12px 0; color: var(--text-muted);">Slide left to compress the tracking window down to the exact instant <span class="math-inline">t = 1s</span>:</p>
+                    
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
+                        <span>Point B Location Timestamp (t):</span>
+                        <span id="slide1-t-readout" class="readout-badge" style="color: var(--neon-pink);">4.00 s</span>
+                    </div>
+                    <input type="range" min="100" max="300" value="300" class="slider-control" id="slide1-slider" oninput="runUnifiedSkiSimulation()">
+                    <div style="margin-top: 12px; font-family: monospace; font-size: 0.85rem; border-top: 1px solid var(--border-glow); padding-top: 10px;">
+                        <!-- 🆕 The Formal Algebra Reference Added Here -->
+                        <div style="margin-bottom: 10px; color: var(--neon-cyan); border-bottom: 1px dashed #1e293b; padding-bottom: 8px;">
+                        📋 <strong>Average Rate of Change Formula:</strong>
+                    <span class="math-block" style="display: block; margin-top: 4px; font-size: 1rem; text-align: center;">
+                        Avg Rate = <span class="frac"><span class="top">f(b) - f(a)</span><span class="bottom">b - a</span></span> &rarr; <span class="frac"><span class="top">f(t) - f(1)</span><span class="bottom">t - 1</span></span>
+                    </span>
+                </div>
+                        <div>• Point A (a = 1.0s): <span style="color: var(--neon-cyan); font-weight: bold;">f(1) = 1.0m</span></div>
+
+                        <div>• Point B (b = t): <span id="slide1-coord-readout" style="color: var(--neon-pink); font-weight: bold;">f(4.0) = 8.0m</span></div>
+                        
+                        <!-- Real-time Ratio Panel -->
+                        <div style="margin-top: 12px; padding: 10px; background: #0f172a; border-radius: 6px; border: 1px solid var(--border-glow);">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                                <span>Distance covered (Δs = f(t) - f(1)):</span>
+                                <span id="slide1-ds-readout" style="color: var(--neon-cyan);">7.50 m</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span>Time window gap (Δt = t - 1):</span>
+                                <span id="slide1-dt-readout" style="color: var(--neon-pink);">3.00 s</span>
+                            </div>
+                            <div style="border-top: 1px dashed #334155; padding-top: 6px; font-size: 0.95rem; color: #ffffff; display: flex; justify-content: space-between;">
+                                <span>Average Speed:</span>
+                                <span id="slide1-ratio-readout" style="font-weight: bold; color: var(--neon-green);">2.50 m/s</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Division by zero warning box -->
+                <div class="exercise-block" id="slide1-collapse-box" style="display: none; border-left-color: var(--neon-pink);">
+                    <div class="exercise-title" style="color: var(--neon-pink);">🛑 System Collapse: The 0÷0 Trap!</div>
+                    <p style="margin: 0; font-size: 0.9rem; line-height: 1.5;">At the exact instant <span class="math-inline">t = 1.00s</span>, the tracking window completely vanishes. The change in time becomes zero (<span class="math-inline">Δt = 0</span>). Algebraically, our division formula yields <span class="math-inline">0 &divide; 0</span>, which is a critical **undefined error**. Basic algebra is fundamentally broken at a single point because a single point has zero change!</p>
+
+                </div>
+            </div>
+            
+            <!-- Pristine Visual Graph Box for Slide 1 -->
+            <div id="slide1-visual-box" style="background: #090d16; border: 1px solid var(--border-glow); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
+                <div style="color: var(--text-main); font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; letter-spacing: 0.3px;">📊 GRAPH SANDBOX: DISTANCE COVERED VS TIME</div>
+                <svg viewBox="-25 -20 240 185" width="100%" style="overflow: visible;">
+                    <!-- Micro-Mesh Alignment Grid Arrays -->
+                    <line x1="30" y1="130" x2="180" y2="130" stroke="#1e293b" stroke-width="0.5"/> <text x="16" y="133" fill="var(--text-muted)" font-size="7">2m</text>
+                    <line x1="30" y1="110" x2="180" y2="110" stroke="#1e293b" stroke-width="0.5"/> <text x="16" y="113" fill="var(--text-muted)" font-size="7">4m</text>
+                    <line x1="30" y1="90" x2="180" y2="90" stroke="#1e293b" stroke-width="0.5"/>  <text x="16" y="93" fill="var(--text-muted)" font-size="7">6m</text>
+                    <line x1="30" y1="70" x2="180" y2="70" stroke="#1e293b" stroke-width="0.5"/>  <text x="16" y="73" fill="var(--text-muted)" font-size="7">8m</text>
+                    <line x1="30" y1="50" x2="180" y2="50" stroke="#1e293b" stroke-width="0.5"/>  <text x="11" y="53" fill="var(--text-muted)" font-size="7">10m</text>
+                    <line x1="30" y1="30" x2="180" y2="30" stroke="#1e293b" stroke-width="0.5"/>  <text x="11" y="33" fill="var(--text-muted)" font-size="7">12m</text>
+
+                    <line x1="60" y1="150" x2="60" y2="25" stroke="#1e293b" stroke-width="0.5"/>  <text x="57" y="161" fill="var(--text-muted)" font-size="7">1s</text>
+                    <line x1="90" y1="150" x2="90" y2="25" stroke="#1e293b" stroke-width="0.5"/>  <text x="87" y="161" fill="var(--text-muted)" font-size="7">2s</text>
+                    <line x1="120" y1="150" x2="120" y2="25" stroke="#1e293b" stroke-width="0.5"/> <text x="117" y="161" fill="var(--text-muted)" font-size="7">3s</text>
+                    <line x1="150" y1="150" x2="150" y2="25" stroke="#1e293b" stroke-width="0.5"/> <text x="147" y="161" fill="var(--text-muted)" font-size="7">4s</text>
+                    <line x1="180" y1="150" x2="180" y2="25" stroke="#1e293b" stroke-width="0.5"/> <text x="177" y="161" fill="var(--text-muted)" font-size="7">5s</text>
+
+                    <line x1="30" y1="150" x2="195" y2="150" stroke="#475569" stroke-width="1"/>
+                    <line x1="30" y1="20" x2="30" y2="150" stroke="#475569" stroke-width="1"/>
+                    <text x="185" y="146" fill="var(--text-main)" font-size="7.5" font-weight="bold">Time (t)</text>
+                    <text x="35" y="16" fill="var(--text-main)" font-size="7.5" font-weight="bold">Distance (m)</text>
+                    
+                    <!-- Programmatic Path Track -->
+                    <path id="slide1-curve-path" fill="none" stroke="var(--neon-blue)" stroke-width="1.5"/>
+                    
+                    <!-- Fixed Anchor Point A -->
+                    <circle cx="60" cy="140" r="3.5" fill="var(--neon-cyan)"/>
+                    <text x="50" y="132" fill="var(--neon-cyan)" font-size="7.5" font-weight="bold">A</text>
+
+
+                    <!-- Interactive Projection Layers -->
+                    <line id="slide1-secant-line" x1="0" y1="0" x2="0" y2="0" stroke="var(--neon-pink)" stroke-width="1.25"/>
+                    <circle id="slide1-secant-node" cx="0" cy="0" r="3.5" fill="var(--neon-pink)"/>
+                    <text id="slide1-node-label" x="0" y="0" fill="var(--neon-pink)" font-size="7.5" font-weight="bold"></text>
+                </svg>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <!-- SLIDE 2: 📐 THE CALCULUS FIX (THE LIMIT DEFINITION) -->
+    <div class="slide-content" id="slide-2">
+        <div class="split-grid">
+            <div id="slide2-content-box">
+                <h3>Bypassing the Wall: The Limit Definition</h3>
+                
+                <p>On Slide 1, our interval gap was calculated as <span class="math-inline">b - a</span> (or <span class="math-inline">t - 1</span>). When the gap shrunk to absolute zero, the math broke down completely because we cannot divide by zero.</p>
+                
+                <p>To bypass this wall, mathematicians re-imagined the interval gap as a standalone tiny placeholder variable called <strong><span class="math-inline">h</span></strong> (where <span class="math-inline">h = b - a</span>). Therefore, instead of tracking a separate point <span class="math-inline">b</span>, we define our second point position as <strong><span class="math-inline">c + h</span></strong>.</p>
+                
+                <p>This subtle notation shift is incredibly powerful: as our two points collide, we simply evaluate the limit as the spacer distance <strong><span class="math-inline">h &rarr; 0</span></strong>:</p>
+
+
+<div class="box">
+    <strong>🧮 The Limit Definition of the Derivative:</strong>
+    <span class="math-block" style="font-size: 1.25rem; font-weight: bold; color: var(--neon-amber); text-align: center; display: block; margin: 8px 0 12px 0;">
+        f'(c) = lim <span class="frac"><span class="top">f(c + h) - f(c)</span><span class="bottom">h</span></span>
+    </span>
+
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 8px 0; border-top: 1px dashed #334155; padding-top: 8px;">
+        Let's substitute our current position (<span class="math-inline">c = 1</span>) into our new path function (<span class="math-inline">f(t) = t²</span>):
+    </p>
+
+    <span class="math-block" style="font-size: 1.15rem; line-height: 2; display: block; margin-top: 10px;">
+        f'(1) = lim <span class="frac"><span class="top">(1 + h)&sup2; - (1)&sup2;</span><span class="bottom">h</span></span> 
+        = lim <span class="frac"><span class="top">1 + 2h + h&sup2; - 1</span><span class="bottom">h</span></span>
+    </span>
+    <span class="math-block" style="font-size: 1.15rem; margin-top: 10px; display: block;">
+        = lim <span class="frac"><span class="top">2h + h&sup2;</span><span class="bottom">h</span></span> 
+        = lim <span class="frac"><span class="top">h(2 + h)</span><span class="bottom">h</span></span> 
+        = lim(2 + h) = <strong style="color: var(--neon-green);">2.00 m/s</strong>
+    </span>
+</div>
+    <div class="example" style="border-left-color: var(--neon-cyan); background-color: #0c1e24;">
+                    <strong>🕹️ Limit Calibration sandbox:</strong>
+                    <p style="margin: 4px 0 10px 0;">Drag the controller below to shrink the run distance (<span class="math-inline">h</span>) toward <span class="math-inline">0</span>. Notice that because the <span class="math-inline">h</span> canceled out in the fraction above, the system no longer crashes!</p>
+                    
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
+                        <span>Interval Run Distance (h):</span>
+                        <span id="slide2-h-readout" class="readout-badge" style="color: var(--neon-cyan);">2.00</span>
+                    </div>
+                    <input type="range" min="1" max="200" value="200" class="slider-control" id="slide2-slider" oninput="runLimitSimulation()" style="accent-color: var(--neon-cyan);">
+                    
+                    <div style="margin-top: 10px; font-family: monospace; font-size: 0.85rem; border-top: 1px solid var(--border-glow); padding-top: 8px;">
+                        <div>• Simplified Speed Formula: <span style="color: #ffffff;">2 + h</span></div>
+                        <div style="margin-top: 4px;">• Calculated Speed Value: <span id="slide2-speed-readout" style="color: var(--neon-green); font-weight: bold;">2.00 m/s</span></div>
+                    </div>
+                </div>
+
+                <p style="font-size: 0.85rem; color: var(--text-muted); font-style: italic; margin-top: 15px;">
+                    <strong>Core Takeaway:</strong> As <span class="math-inline">h &rarr; 0</span>, the secant line transitions into a single-point **Tangent Line**. Its slope is the <strong>Instantaneous Rate of Change</strong>, or the <strong>Derivative</strong>, denoted as <span class="math-inline">f'(1) = 1.00\text{ m/s}</span>.
+                </p>
+            </div>
+            
+            <!-- Pristine Visual Graph Box for Slide 2 -->
+            <div id="slide2-visual-box" style="background: #090d16; border: 1px solid var(--border-glow); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
+                <div style="color: var(--text-main); font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; letter-spacing: 0.3px;">📉 LIMIT ENGINE: CONVERGENCE TO TANGENT</div>
+                <svg viewBox="-25 -20 240 185" width="100%" style="overflow: visible;">
+                    <line x1="30" y1="130" x2="180" y2="130" stroke="#1e293b" stroke-width="0.5"/> <text x="16" y="133" fill="var(--text-muted)" font-size="7">2m</text>
+                    <line x1="30" y1="110" x2="180" y2="110" stroke="#1e293b" stroke-width="0.5"/> <text x="16" y="113" fill="var(--text-muted)" font-size="7">4m</text>
+                    <line x1="30" y1="90" x2="180" y2="90" stroke="#1e293b" stroke-width="0.5"/>  <text x="16" y="93" fill="var(--text-muted)" font-size="7">6m</text>
+                    <line x1="30" y1="70" x2="180" y2="70" stroke="#1e293b" stroke-width="0.5"/>  <text x="16" y="73" fill="var(--text-muted)" font-size="7">8m</text>
+
+                    <line x1="60" y1="150" x2="60" y2="25" stroke="#1e293b" stroke-width="0.5"/>  <text x="57" y="161" fill="var(--text-muted)" font-size="7">1s</text>
+                    <line x1="120" y1="150" x2="120" y2="25" stroke="#1e293b" stroke-width="0.5"/> <text x="117" y="161" fill="var(--text-muted)" font-size="7">2s</text>
+                    <line x1="180" y1="150" x2="180" y2="25" stroke="#1e293b" stroke-width="0.5"/> <text x="177" y="161" fill="var(--text-muted)" font-size="7">3s</text>
+
+                    <line x1="30" y1="150" x2="195" y2="150" stroke="#475569" stroke-width="1"/>
+                    <line x1="30" y1="20" x2="30" y2="150" stroke="#475569" stroke-width="1"/>
+                    <text x="185" y="146" fill="var(--text-main)" font-size="7.5" font-weight="bold">Time (t)</text>
+                    <text x="35" y="16" fill="var(--text-main)" font-size="7.5" font-weight="bold">Distance (m)</text>
+                    
+                    <!-- Programmatic Path Track -->
+                    <path id="slide2-curve-path" fill="none" stroke="var(--neon-blue)" stroke-width="1.5"/>
+                    
+                    <!-- Base Anchor Point A (Aligned to new t^2 curve height) -->
+                    <circle cx="60" cy="140" r="3.5" fill="var(--neon-cyan)"/>
+                    <text x="50" y="132" fill="var(--neon-cyan)" font-size="7.5" font-weight="bold">A (1s)</text>
+
+
+                    <!-- Limit Line and Node Projections -->
+                    <line id="slide2-tangent-line" x1="0" y1="0" x2="0" y2="0" stroke="var(--neon-green)" stroke-width="1.25"/>
+                    <circle id="slide2-node-h" cx="0" cy="0" r="3.5" fill="var(--neon-pink)"/>
+                    <text id="slide2-label-h" x="0" y="0" fill="var(--neon-pink)" font-size="7.5" font-weight="bold"></text>
+                </svg>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- SLIDE 3: 📐 THE TANGENT LINE FORMULA SANDBOX -->
+    <div class="slide-content" id="slide-3">
+        <div class="split-grid">
+            <div id="slide3-content-box">
+                <h3>Constructing the Tangent Line Equation</h3>
+                <p>The derivative value <span class="math-inline">f'(c)</span> provides the exact instantaneous slope at a single point target. To map this line across space, we anchor this slope directly into the classic algebraic **Point-Slope Formula** framework:</p>
+                
+                <div class="box">
+                    <strong>📐 The Canonical Point-Slope Model:</strong>
+                    <span class="math-block" style="font-size: 1.25rem; font-weight: bold; color: var(--neon-amber); text-align: center; display: block; margin: 6px 0;">
+                        y - f(c) = f'(c) &middot; (x - c)
+                    </span>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin: 6px 0 0 0; text-align: center;">
+                        Where <span style="color: var(--neon-cyan); font-weight: bold;">(c, f(c))</span> is the coordinate point and <span style="color: var(--neon-pink); font-weight: bold;">f'(c)</span> is the slope (<span class="math-inline">m</span>).
+                    </p>
+                </div>
+
+                <div class="example" style="border-left-color: var(--neon-green); background-color: #0c2415;">
+                    <strong>🕹️ Tangent Slope Calibrator:</strong>
+                    <p style="margin: 4px 0 10px 0;">Move the slider below to shift the target location coordinate <span class="math-inline">c</span> along our graph path function <span class="math-inline">f(x) = 0.25x²</span> (where the derived derivative rule yields <span class="math-inline">f'(x) = 0.5x</span>):</p>
+                    
+                    <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
+                        <span>Target Center Coordinate (c):</span>
+                        <span id="slide3-c-readout" class="readout-badge" style="color: var(--neon-green);">2.00</span>
+                    </div>
+                    <input type="range" min="-300" max="300" value="200" class="slider-control" id="slide3-slider" oninput="runTangentSimulation()" style="accent-color: var(--neon-green);">
+
+                    
+                    <!-- Dynamic Live Algebraic Intercept Generation Mesh -->
+                    <div style="margin-top: 12px; font-family: monospace; font-size: 0.85rem; border-top: 1px solid var(--border-glow); padding-top: 10px; line-height: 1.6;">
+                        <div>• Point Coordinates: <span id="slide3-coord-readout" style="color: var(--neon-cyan); font-weight: bold;">(2.0, 1.0)</span></div>
+                        <div>• Instantaneous Slope f'(c): <span id="slide3-slope-readout" style="color: var(--neon-pink); font-weight: bold;">1.00</span></div>
+                        <div style="margin-top: 6px; padding: 6px; background: #090d16; border-radius: 4px; border: 1px dashed var(--border-glow);">
+                            👉 Raw Form: <span id="slide3-raw-formula" style="color: #ffffff;">y - 1.00 = 1.00(x - 2.0)</span><br>
+                            🚀 Slope-Intercept form: <span id="slide3-final-formula" style="color: var(--neon-green); font-weight: bold;">y = 1.00x - 1.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Refined Visual Graph Engine For Slide 3 Canvas -->
+            <div id="slide3-visual-box" style="background: #090d16; border: 1px solid var(--border-glow); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 300px;">
+                <div style="color: var(--text-main); font-weight: 600; font-size: 0.85rem; margin-bottom: 12px; letter-spacing: 0.3px;">📐 GEOMETRIC TANGENT GEOMETRY PROFILE</div>
+                <svg viewBox="-100 -20 200 185" width="100%" style="overflow: visible;">
+                    <!-- Grid lines array mapping coordinates precisely -->
+                    <line x1="-90" y1="140" x2="90" y2="140" stroke="#475569" stroke-width="1"/> <!-- X Axis -->
+                    <line x1="0" y1="-10" x2="0" y2="150" stroke="#475569" stroke-width="1"/>   <!-- Y Axis -->
+                    
+                    <!-- Vertical grid lines -->
+                    <line x1="-60" y1="140" x2="-60" y2="10" stroke="#1e293b" stroke-width="0.5"/> <text x="-64" y="152" fill="var(--text-muted)" font-size="7">-2</text>
+                    <line x1="-30" y1="140" x2="-30" y2="10" stroke="#1e293b" stroke-width="0.5"/> <text x="-34" y="152" fill="var(--text-muted)" font-size="7">-1</text>
+                    <line x1="30" y1="140" x2="30" y2="10" stroke="#1e293b" stroke-width="0.5"/>  <text x="28" y="152" fill="var(--text-muted)" font-size="7">1</text>
+                    <line x1="60" y1="140" x2="60" y2="10" stroke="#1e293b" stroke-width="0.5"/>   <text x="58" y="152" fill="var(--text-muted)" font-size="7">2</text>
+                    
+                    <!-- Horizontal grid lines -->
+                    <line x1="-90" y1="110" x2="90" y2="110" stroke="#1e293b" stroke-width="0.5"/> <text x="-99" y="113" fill="var(--text-muted)" font-size="7">1</text>
+                    <line x1="-90" y1="80" x2="90" y2="80" stroke="#1e293b" stroke-width="0.5"/>  <text x="-99" y="83" fill="var(--text-muted)" font-size="7">2</text>
+                    <line x1="-90" y1="50" x2="90" y2="50" stroke="#1e293b" stroke-width="0.5"/>  <text x="-99" y="53" fill="var(--text-muted)" font-size="7">3</text>
+                    <line x1="-90" y1="20" x2="90" y2="20" stroke="#1e293b" stroke-width="0.5"/>  <text x="-99" y="23" fill="var(--text-muted)" font-size="7">4</text>
+
+                    <!-- 🎯 PRE-RENDERED INITIAL BLUE PARABOLA PATH -->
+                    <path id="slide3-parabola-curve" d="M -96,111.2 L -87,101.45 L -78,92.48 L -69,84.29 L -60,76.88 L -51,70.25 L -42,64.4 L -33,59.33 L -24,55.04 L -15,51.53 L -6,48.8 L 3,46.85 L 12,45.68 L 21,45.29 L 30,45.68 L 39,46.85 L 48,48.8 L 57,51.53 L 66,55.04 L 75,59.33 L 84,64.4 L 93,70.25 L 96,72.32" fill="none" stroke="var(--neon-blue)" stroke-width="1.5"/>
+                    
+                    <!-- Dynamic Live Vector Tangent Line and Target Node -->
+                    <line id="slide3-tangent-line" x1="0" y1="0" x2="0" y2="0" stroke="var(--neon-pink)" stroke-width="1.25"/>
+                    <circle id="slide3-tangent-node" cx="0" cy="0" r="3" fill="var(--neon-green)"/>
+                    <text id="slide3-node-label" x="0" y="0" fill="var(--neon-green)" font-size="7" font-weight="normal"></text>
+
+                </svg>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <!-- SLIDE 4: ✏️ WORKED EXAMPLES (EXACT MODULE MATCH) -->
+    <div class="slide-content" id="slide-4">
+        <h3>Derivative Evaluation Masterclass</h3>
+        
+        <div class="example">
+            <strong>Example 4.1 (Derivative at a Point):</strong> Use the limit definition of the derivative to find the exact value of <span class="math-inline">f'(3)</span> for the quadratic function <span class="math-inline">f(x) = x<sup>2</sup></span>.
+            <br><br>
+            <strong>Solution Method:</strong>
+            <ol>
+                <li><strong>Set up the limit formula:</strong> We substitute our given point <span class="math-inline">c = 3</span> into the limit definition formula:
+                    <div class="math-block" style="font-size:1.15rem; margin:10px 0;">
+                        f'(3) = lim<sub>h&rarr;0</sub> <span class="frac"><span class="top">f(3 + h) &minus; f(3)</span><span class="bottom">h</span></span>
+                    </div>
+                    We find our individual function values using <span class="math-inline">f(x) = x<sup>2</sup></span>:
+                    <div class="math-block" style="font-size:1.1rem; margin:8px 0;">
+                        f(3) = (3)<sup>2</sup> = 9 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; and &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; f(3 + h) = (3 + h)<sup>2</sup> = 9 + 6h + h<sup>2</sup>
+                    </div>
+                </li>
+                <li style="margin-top:6px;"><strong>Expand and simplify the numerator:</strong> We substitute these expressions back into our fraction and simplify the terms on top:
+                    <div class="math-block" style="font-size:1.15rem; margin:10px 0;">
+                        f'(3) = lim<sub>h&rarr;0</sub> <span class="frac"><span class="top">(9 + 6h + h<sup>2</sup>) &minus; 9</span><span class="bottom">h</span></span> = lim<sub>h&rarr;0</sub> <span class="frac"><span class="top">6h + h<sup>2</sup></span><span class="bottom">h</span></span>
+                    </div>
+                </li>
+                <li style="margin-top:6px;"><strong>Simplify the fraction and evaluate the limit:</strong> Directly substituting <span class="math-inline">h = 0</span> results in an undefined fraction (<span class="math-inline">0 &frasl; 0</span>). We take out <span class="math-inline">h</span> as a common factor in the numerator to avoid dividing by zero:
+                    <div class="math-block" style="font-size:1.15rem; margin:10px 0;">
+                        f'(3) = lim<sub>h&rarr;0</sub> <span class="frac"><span class="top">h &middot; (6 + h)</span><span class="bottom">h</span></span> = lim<sub>h&rarr;0</sub> (6 + h)
+                    </div>
+                    Calculating the limit as <span class="math-inline">h &rarr; 0</span> gives our final answer: <span class="math-inline">f'(3) = 6 + 0 = </span> <strong style="color: var(--neon-green);">6</strong>.
+                </li>
+            </ol>
+        </div>
+
+        <div class="example" style="border-left-color: var(--neon-cyan); background-color: #0c1e36;">
+            <strong>Example 4.2 (Constructing a Tangent Equation):</strong> Find the equation of the tangent line to the curve <span class="math-inline">f(x) = x<sup>2</sup></span> at the point where <span class="math-inline">x = 3</span>.
+            <br><br>
+            <strong>Solution Method:</strong>
+            <ol>
+                <li><strong>Find the coordinates of the point and the slope:</strong> We collect the values we need at our target position <span class="math-inline">c = 3</span>:
+                    <br>&bull; The y-coordinate of the point: <span class="math-inline">f(3) = 3<sup>2</sup> = </span> <strong>9</strong>
+                    <br>&bull; The slope of the tangent line (calculated in the previous example): <span class="math-inline">f'(3) = </span> <strong>6</strong>
+                </li>
+                <li style="margin-top:6px;"><strong>Substitute the values into the formula:</strong> We substitute these values directly into the tangent line formula:
+                    <div class="math-block" style="font-size:1.15rem; margin:10px 0;">
+                        y &minus; 9 = 6 &middot; (x &minus; 3)
+                    </div>
+                </li>
+                <li style="margin-top:6px;"><strong>Simplify into standard form:</strong> We expand the brackets and rearrange the equation to solve for <span class="math-inline">y</span>:
+                    <div class="math-block" style="font-size:1.15rem; margin:10px 0;">
+                        y &minus; 9 = 6x &minus; 18
+                    </div>
+                    <div class="math-block" style="font-size:1.15rem; margin:10px 0;">
+                        y = 6x &minus; 18 + 9 &nbsp;&nbsp;&nbsp;&nbsp; &rArr; &nbsp;&nbsp;&nbsp;&nbsp; <strong style="color: var(--neon-green);">y = 6x &minus; 9</strong>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+
+    <!-- Slide 5: Practice Set -->
+    <div class="slide-content" id="slide-5">
+        <h3 style="color: var(--neon-amber); margin-top: 0; margin-bottom: 5px;">🏋️ Mandatory Written Exercises</h3>
+        <p style="margin-top: 0; color: var(--text-muted); font-size: 0.9rem;">Complete these core problems in your notebook to prepare for the milestone verification check.</p>
+        
+        <!-- Exercise 1 -->
+        <div class="exercise-block">
+            <div class="exercise-title">Exercise 5.1: Instantaneous Rate Calculation</div>
+            <p style="font-size:0.85rem; margin-top:0; color:var(--text-muted);">Use the limit definition of the derivative to calculate the exact derivative value <span class="math-inline">f'(c)</span> for each function at the given point:</p>
+            <div class="grid-2">
+                <div class="exercise-item" style="display:block;">
+                    <strong>a)</strong> Determine:<br>
+                    <div class="math-block" style="margin: 8px 0; font-size:1.05rem;">f(x) = 4x &minus; 5, &nbsp;&nbsp;&nbsp;&nbsp; at c = 2</div>
+                </div>
+                <div class="exercise-item" style="display:block;">
+                    <strong>b)</strong> Determine:<br>
+                    <div class="math-block" style="margin: 8px 0; font-size:1.05rem;">f(x) = x<sup>2</sup> + 3x, &nbsp;&nbsp;&nbsp;&nbsp; at c = 1</div>
+                </div>
+                <div class="exercise-item" style="display:block; margin-top: 8px;">
+                    <strong>c)</strong> Determine:<br>
+                    <div class="math-block" style="margin: 8px 0; font-size:1.05rem;">f(x) = 2x<sup>2</sup> &minus; 1, &nbsp;&nbsp;&nbsp;&nbsp; at c = &minus;2</div>
+                </div>
+                <div class="exercise-item" style="display:block; margin-top: 8px;">
+                    <strong>d)</strong> Determine:<br>
+                    <div class="math-block" style="margin: 8px 0; font-size:1.05rem;">f(x) = 3 &minus; x<sup>2</sup>, &nbsp;&nbsp;&nbsp;&nbsp; at c = 0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercise 2 -->
+        <div class="exercise-block" style="border-left-color: var(--neon-blue);">
+            <div class="exercise-title">Exercise 5.2: Tangent Equation Construction</div>
+            <p style="font-size:0.85rem; margin-top:0; color:var(--text-muted);">Find the function value <span class="math-inline">f(c)</span> and use the given derivative value to find the complete equation (<span class="math-inline">y = mx + p</span>) for the tangent line at the given point:</p>
+            <div class="grid-2">
+                <div class="exercise-item" style="display:block;">
+                    <strong>a) Determine line equation:</strong><br>
+                    <div class="math-block" style="margin: 8px 0; font-size:1.05rem;">f(x) = x<sup>2</sup>, &nbsp;&nbsp;&nbsp;&nbsp; at c = 4 &nbsp;&nbsp;&nbsp;&nbsp; (given f'(4) = 8)</div>
+                </div>
+                <div class="exercise-item" style="display:block;">
+                    <strong>b) Determine line equation:</strong><br>
+                    <div class="math-block" style="margin: 8px 0; font-size:1.05rem;">f(x) = 3x<sup>2</sup>, &nbsp;&nbsp;&nbsp;&nbsp; at c = &minus;1 &nbsp;&nbsp;&nbsp;&nbsp; (given f'(&minus;1) = &minus;6)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Exercise 3 -->
+        <div class="exercise-block" style="border-left-color: var(--neon-green); margin-bottom: 0;">
+            <div class="exercise-title">Exercise 5.3: [Advanced Challenge] Secant Slope Progression</div>
+            
+            <!-- Balanced Two-Column Grid Alignment -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; align-items: center; margin-top: 15px;">
+                
+                <!-- Left Column: Problem Text and Instructions -->
+                <div style="display: flex; flex-direction: column; justify-content: center;">
+                    <p style="font-size:0.88rem; line-height: 1.5; color:var(--text-main); margin-top: 0; margin-bottom: 12px;">A secant line passes through the quadratic curve <span class="math-inline">f(x) = 0.5x<sup>2</sup></span> at the points where <span class="math-inline">x = 1</span> and <span class="math-inline">x = 3</span>.</p>
+                    <ul style="font-size: 0.88rem; padding-left: 15px; margin: 0; color: var(--text-muted); line-height: 1.7;">
+                        <li><strong>a)</strong> Find the exact y-coordinates <span class="math-inline">f(1)</span> and <span class="math-inline">f(3)</span>.</li>
+                        <li style="margin-top: 8px;"><strong>b)</strong> Calculate the average slope of the secant line passing between these two points.</li>
+                        <li style="margin-top: 8px;"><strong>c)</strong> Complete the graph along the coordinate grid by sketching the straight line passing through your two points.</li>
+                    </ul>
+                </div>
+                
+                <!-- Right Column: Widened Graph Frame Terrain Canvas -->
+                <div style="padding: 20px; background: #040711; border: 1px solid var(--border-glow); border-radius: 8px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; width: 100%;">
+                    <svg viewBox="-30 -20 180 185" width="100%" style="overflow: visible; max-width: 250px; height: auto;">
+                        <!-- Light Background Coordinate Mesh System Matrix -->
+                        <line x1="0" y1="150" x2="150" y2="150" stroke="#1e293b" stroke-width="0.5"/>
+                        <line x1="0" y1="120" x2="150" y2="120" stroke="#1e293b" stroke-width="0.5"/> <text x="-12" y="122" fill="var(--text-muted)" font-size="7">1</text>
+                        <line x1="0" y1="90" x2="150" y2="90" stroke="#1e293b" stroke-width="0.5"/>  <text x="-12" y="92" fill="var(--text-muted)" font-size="7">2</text>
+                        <line x1="0" y1="60" x2="150" y2="60" stroke="#1e293b" stroke-width="0.5"/>  <text x="-12" y="62" fill="var(--text-muted)" font-size="7">3</text>
+                        <line x1="0" y1="30" x2="150" y2="30" stroke="#1e293b" stroke-width="0.5"/>  <text x="-12" y="32" fill="var(--text-muted)" font-size="7">4</text>
+                        <line x1="0" y1="0" x2="150" y2="0" stroke="#1e293b" stroke-width="0.5"/>   <text x="-12" y="2" fill="var(--text-muted)" font-size="7">5</text>
+                        
+                        <line x1="0" y1="0" x2="0" y2="150" stroke="#1e293b" stroke-width="0.5"/>
+                        <line x1="30" y1="0" x2="30" y2="150" stroke="#1e293b" stroke-width="0.5"/>  <text x="28" y="159" fill="var(--text-muted)" font-size="7">1</text>
+                        <line x1="60" y1="0" x2="60" y2="150" stroke="#1e293b" stroke-width="0.5"/>  <text x="58" y="159" fill="var(--text-muted)" font-size="7">2</text>
+                        <line x1="90" y1="0" x2="90" y2="150" stroke="#1e293b" stroke-width="0.5"/>  <text x="88" y="159" fill="var(--text-muted)" font-size="7">3</text>
+                        <line x1="120" y1="0" x2="120" y2="150" stroke="#1e293b" stroke-width="0.5"/> <text x="118" y="159" fill="var(--text-muted)" font-size="7">4</text>
+
+                        <!-- Heavy Main System Base Axes Lines -->
+                        <line x1="-10" y1="150" x2="160" y2="150" stroke="#475569" stroke-width="1.25"/> <!-- X Axis -->
+                        <line x1="0" y1="160" x2="0" y2="-10" stroke="#475569" stroke-width="1.25"/>  <!-- Y Axis -->
+                        <text x="156" y="146" fill="var(--text-muted)" font-size="7">x</text>
+                        <text x="4" y="-4" fill="var(--text-muted)" font-size="7">y</text>
+
+                        <!-- Precise High-Fidelity Vector Curve Trace (f(x) = 0.5x²) -->
+                        <path d="M 0,150 L 6,149.4 L 12,147.6 L 18,144.6 L 24,140.4 L 30,135 L 36,128.4 L 42,120.6 L 48,111.6 L 54,101.4 L 60,90 L 66,77.4 L 72,63.6 L 78,48.6 L 84,32.4 L 90,15 L 96,-3.6" fill="none" stroke="var(--neon-blue)" stroke-width="1.5"/>
+                        <text x="105" y="75" fill="var(--neon-blue)" font-size="6" font-weight="bold">f(x) = 0.5x²</text>
+                        
+                        <!-- Crimson Anchor Node Indicators -->
+                        <circle cx="30" cy="135" r="2.5" fill="var(--neon-pink)"/>
+                        <text x="36" y="133" fill="var(--neon-pink)" font-size="6">(1, 0.5)</text>
+
+                        <circle cx="90" cy="15" r="2.5" fill="var(--neon-pink)"/>
+                        <text x="96" y="13" fill="var(--neon-pink)" font-size="6">(3, 4.5)</text>
+                    </svg>
+                </div>
+                
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <!-- Slide 6: Milestone Gatekeeper -->
+    <div class="slide-content" id="slide-6">
+        <h3 style="color: var(--neon-amber); margin-top: 0;">🏁 Section 5 Verification Check</h3>
+        <p>To finalize Module 5 and clear the next master gate lock, complete the instantaneous rate solutions in <strong>Exercise 5.1</strong> and <strong>Exercise 5.2</strong>. Calculate your target parameters for <strong>Exercise 5.1 part (b) [value of f'(1)]</strong> and the final y-intercept constant value for <strong>Exercise 5.2 part (a) [p-value]</strong>, then combine them directly back-to-back:</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Format: Enter both integers next to each other with no spaces or commas. For negative numbers, include the minus sign relative to that specific digit block (e.g., if answers were 4 and -25, you would enter 4-25).</p>
+        
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <input type="text" id="section5-key-input" placeholder="Enter constants code..." autocomplete="off" style="background: #0f172a; border: 1px solid #334155; color: var(--text-main); padding: 12px; border-radius: 8px; font-size: 1rem; width: 220px;">
+            <button style="background: var(--neon-amber); color: #090d16; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer;" onclick="parent.verifySection5Key()">Submit Verification</button>
+        </div>
+        <div id="section5-feedback-box" style="margin-top: 15px; font-weight: 700;"></div>
+    </div>
+
+
+    <!-- MASTER DECK NAVIGATION ROUTER -->
+    <script>
+        function showSlide(slideId) {
+            // Hide all slides and clear active tab button states
+            document.querySelectorAll('.slide-content').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab-nav .tab-btn').forEach(b => b.classList.remove('active'));
+            
+            // Activate target slide box
+            document.getElementById('slide-' + slideId).classList.add('active');
+            
+            // Set clicked button state correctly
+            if (window.event && window.event.currentTarget) {
+                window.event.currentTarget.classList.add('active');
+            } else {
+                // Fallback selection targeting
+                const buttons = document.querySelectorAll('.tab-nav .tab-btn');
+                if (buttons[slideId - 1]) buttons[slideId - 1].classList.add('active');
+            }
+            
+            // Scroll frame back to top smoothly
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function runUnifiedSkiSimulation() {
+            const slider = document.getElementById('slide1-slider');
+            if (!slider) return;
+            
+            const tVal = parseFloat(slider.value) / 100;
+            const yVal = tVal * tVal; // New function: f(t) = t^2
+            const tA = 1.0;
+            const yA = 1.0;
+            const dT = tVal - tA;
+            const dS = yVal - yA;
+            
+            const curveElement = document.getElementById('slide1-curve-path');
+            if (curveElement) {
+                let pathPoints = [];
+                for (let tG = 0.0; tG <= 3.2; tG += 0.05) {
+                    const yG = tG * tG;
+                    const pX = tG * 60;
+                    const pY = 150 - (yG * 10);
+                    if (pX >= 30 && pX <= 195 && pY >= 20) {
+                        pathPoints.push(`${pathPoints.length === 0 ? 'M' : 'L'} ${pX},${pY}`);
+                    }
+                }
+                curveElement.setAttribute('d', pathPoints.join(' '));
+            }
+            
+            document.getElementById('slide1-t-readout').textContent = tVal.toFixed(2) + ' s';
+            document.getElementById('slide1-coord-readout').textContent = `(${tVal.toFixed(2)}s, ${yVal.toFixed(2)}m)`;
+            document.getElementById('slide1-ds-readout').textContent = dS.toFixed(3) + ' m';
+            document.getElementById('slide1-dt-readout').textContent = dT.toFixed(3) + ' s';
+            
+            const ratioOutput = document.getElementById('slide1-ratio-readout');
+            const collapseBox = document.getElementById('slide1-collapse-box');
+            const lineVec = document.getElementById('slide1-secant-line');
+            const nodeB = document.getElementById('slide1-secant-node');
+            const labelB = document.getElementById('slide1-node-label');
+            
+            const pX_A = 60;
+            const pY_A = 140;
+            const pX_B = tVal * 60;
+            const pY_B = 150 - (yVal * 10);
+            
+            if (Math.abs(dT) < 0.005) {
+                ratioOutput.innerHTML = `<span style="color: var(--neon-pink); font-weight:bold;">ERROR: 0 &divide; 0 (Undefined)</span>`;
+                collapseBox.style.display = 'block';
+                lineVec.setAttribute('stroke-width', '0');
+                nodeB.setAttribute('cx', pX_A);
+                nodeB.setAttribute('cy', pY_A);
+                labelB.textContent = "";
+            } else {
+                const avgSpeed = dS / dT;
+                ratioOutput.textContent = avgSpeed.toFixed(2) + ' m/s';
+                collapseBox.style.display = 'none';
+                lineVec.setAttribute('stroke-width', '1.25');
+                
+                nodeB.setAttribute('cx', pX_B);
+                nodeB.setAttribute('cy', pY_B);
+                labelB.setAttribute('x', pX_B + 7);
+                labelB.setAttribute('y', pY_B - 4);
+                labelB.textContent = `B`;
+                
+                const tStart = 0.4;
+                const yStart = yA + avgSpeed * (tStart - tA);
+                const tEnd = 3.0;
+                const yEnd = yA + avgSpeed * (tEnd - tA);
+                
+                lineVec.setAttribute('x1', tStart * 60);
+                lineVec.setAttribute('y1', 150 - (yStart * 10));
+                lineVec.setAttribute('x2', tEnd * 60);
+                        lineVec.setAttribute('y2', 150 - (yEnd * 10));
+            }
+        }
+
+function runLimitSimulation() {
+    const slider = document.getElementById('slide2-slider');
+    if (!slider) return;
+    
+    const hVal = parseFloat(slider.value) / 100;
+    const tVal = 1.0 + hVal;
+    const yVal = tVal * tVal; // New function f(t) = t^2
+    const slopeM = 2.0 + hVal; // Derivative limit equation m = 2 + h
+    
+    const curveElement = document.getElementById('slide2-curve-path');
+    if (curveElement) {
+        let pathPoints = [];
+        for (let tG = 0.0; tG <= 3.2; tG += 0.05) {
+            const yG = tG * tG;
+            const pX = tG * 60;
+            const pY = 150 - (yG * 10);
+            if (pX >= 30 && pX <= 195 && pY >= 20) {
+                pathPoints.push(`${pathPoints.length === 0 ? 'M' : 'L'} ${pX},${pY}`);
+            }
+        }
+        curveElement.setAttribute('d', pathPoints.join(' '));
+    }
+    
+    document.getElementById('slide2-h-readout').textContent = hVal.toFixed(2);
+    document.getElementById('slide2-speed-readout').textContent = slopeM.toFixed(2) + ' m/s';
+    
+    const pX_B = tVal * 60;
+    const pY_B = 150 - (yVal * 10);
+    
+    const lineVec = document.getElementById('slide2-tangent-line');
+    const nodeB = document.getElementById('slide2-node-h');
+    const labelB = document.getElementById('slide2-label-h');
+    
+    if (lineVec && nodeB && labelB) {
+        nodeB.setAttribute('cx', pX_B);
+        nodeB.setAttribute('cy', pY_B);
+        labelB.setAttribute('x', pX_B + 7);
+        labelB.setAttribute('y', pY_B - 4);
+        labelB.textContent = `B`;
+        
+        const tStart = 0.4;
+        const yStart = 1.0 + slopeM * (tStart - 1.0);
+        const tEnd = 3.0;
+        const yEnd = 1.0 + slopeM * (tEnd - 1.0);
+        
+        lineVec.setAttribute('x1', tStart * 60);
+        lineVec.setAttribute('y1', 150 - (yStart * 10));
+        lineVec.setAttribute('x2', tEnd * 60);
+        lineVec.setAttribute('y2', 150 - (yEnd * 10));
+    }
+}
+
+
+
+        function runTangentSimulation() {
+            const slider = document.getElementById('slide3-slider');
+            if (!slider) return;
+            
+            // 1. Math Domain Computations: f(x) = 0.25*x^2, f'(x) = 0.5*x
+            const cVal = parseFloat(slider.value) / 100;
+            const yVal = 0.25 * cVal * cVal;
+            const slopeM = 0.5 * cVal;
+            const interceptB = yVal - (slopeM * cVal);
+            
+            // Generate exact high-fidelity path array for the parabola inside view boundaries
+            const curveElement = document.getElementById('slide3-parabola-curve');
+            if (curveElement) {
+                let pathPoints = [];
+                for (let xG = -3.2; xG <= 3.2; xG += 0.1) {
+                    const yG = 0.25 * xG * xG;
+                    const pX = xG * 30;
+                    const pY = 140 - (yG * 30);
+                    pathPoints.push(`${pathPoints.length === 0 ? 'M' : 'L'} ${pX},${pY}`);
+                }
+                curveElement.setAttribute('d', pathPoints.join(' '));
+            }
+            
+            // Update textual layout badge values
+            document.getElementById('slide3-c-readout').textContent = cVal.toFixed(2);
+            document.getElementById('slide3-coord-readout').textContent = `(${cVal.toFixed(2)}, ${yVal.toFixed(2)})`;
+            document.getElementById('slide3-slope-readout').textContent = slopeM.toFixed(2);
+            
+            const signY = yVal >= 0 ? '-' : '+';
+            const absY = Math.abs(yVal).toFixed(2);
+            const signC = cVal >= 0 ? '-' : '+';
+            const absC = Math.abs(cVal).toFixed(2);
+            document.getElementById('slide3-raw-formula').innerHTML = `y ${signY} ${absY} = ${slopeM.toFixed(2)}(x ${signC} ${absC})`;
+            
+            const signB = interceptB >= 0 ? '+ ' + interceptB.toFixed(2) : '- ' + Math.abs(interceptB).toFixed(2);
+            document.getElementById('slide3-final-formula').textContent = `y = ${slopeM.toFixed(2)}x ${interceptB === 0 ? '' : signB}`;
+            
+            // Compute graph canvas projection pixels
+            const pixelX_C = cVal * 30;
+            const pixelY_C = 140 - (yVal * 30);
+            
+            const nodeTarget = document.getElementById('slide3-tangent-node');
+            const labelTarget = document.getElementById('slide3-node-label');
+            const lineTarget = document.getElementById('slide3-tangent-line');
+            
+            if (nodeTarget && labelTarget && lineTarget) {
+                nodeTarget.setAttribute('cx', pixelX_C);
+                nodeTarget.setAttribute('cy', pixelY_C);
+                
+                // Clear bold styling weight artifacts and add a thin gap space offset
+                labelTarget.setAttribute('x', pixelX_C + 6);
+                labelTarget.setAttribute('y', pixelY_C - 4);
+                labelTarget.style.fontWeight = 'normal';
+                labelTarget.style.textShadow = 'none'; // Strips out the aggressive text layer cloning
+                labelTarget.textContent = `P(${cVal.toFixed(1)}, ${yVal.toFixed(1)})`;
+                
+                // Boundary clipping calculations
+                const tStartX = -3.0;
+                const tStartY = (slopeM * tStartX) + interceptB;
+                const tEndX = 3.0;
+                const tEndY = (slopeM * tEndX) + interceptB;
+                
+                lineTarget.setAttribute('x1', tStartX * 30);
+                lineTarget.setAttribute('y1', 140 - (tStartY * 30));
+                lineTarget.setAttribute('x2', tEndX * 30);
+                lineTarget.setAttribute('y2', 140 - (tEndY * 30));
+            }
+        }
+
+
+        window.addEventListener('DOMContentLoaded', () => {
+            runUnifiedSkiSimulation();
+            runLimitSimulation();
+            runTangentSimulation();
+        });
+
+        // Inside showSlide(slideId)
+        if (slideId === 1) runUnifiedSkiSimulation();
+        if (slideId === 2) runLimitSimulation();
+        if (slideId === 3) runTangentSimulation();
+    </script>
+</body>
+</html>
