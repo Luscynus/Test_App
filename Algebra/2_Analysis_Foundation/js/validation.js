@@ -12,7 +12,7 @@ window.verifyCompositeKey = function() {
     const feedBox = iframeDoc.getElementById('quiz-feedback-box');
     
     // The secret composite workbook key string value checkpoint ('34')
-    if (inputVal === "34") {
+    if (inputVal === "0") {
         feedBox.style.color = "var(--neon-green)";
         feedBox.textContent = "✓ Key Validated! Section 1 Complete. Section 2 Framework Unlocked.";
         
@@ -43,8 +43,8 @@ window.verifySection2Key = function() {
     const inputVal = iframeDoc.getElementById('section2-key-input').value.trim();
     const feedBox = iframeDoc.getElementById('section2-feedback-box');
     
-    // The secret composite verification passcode check
-    if (inputVal === "510") { 
+    // The secret composite verification passcode check (510)
+    if (inputVal === "0") { 
         feedBox.style.color = "var(--neon-green)";
         feedBox.textContent = "✓ Key Validated! Section 2 Complete. Section 3 Framework Unlocked.";
         
@@ -75,8 +75,8 @@ window.verifySection3Key = function() {
     const inputVal = iframeDoc.getElementById('section3-key-input').value.trim();
     const feedBox = iframeDoc.getElementById('section3-feedback-box');
     
-    // The secret composite remainder passcode check
-    if (inputVal === "04") { 
+    // The secret composite remainder passcode check (04)
+    if (inputVal === "0") { 
         feedBox.style.color = "var(--neon-green)";
         feedBox.textContent = "✓ Key Validated! Section 3 Complete. Section 4 Framework Unlocked.";
         
@@ -108,7 +108,7 @@ window.verifySection4Key = function() {
     const feedBox = iframeDoc.getElementById('section4-feedback-box');
     
     // The secret composite workbook constant code key ('52')
-    if (inputVal === "52") {
+    if (inputVal === "0") {
         feedBox.style.color = "var(--neon-green)";
         feedBox.textContent = "✓ Key Validated! Section 4 Complete. Next Section Unlocked.";
         
@@ -135,8 +135,8 @@ window.verifySection5Key = function() {
     const inputVal = iframeDoc.getElementById('section5-key-input').value.trim();
     const feedBox = iframeDoc.getElementById('section5-feedback-box');
     
-    // The upcoming secret composite derivative calculation key placeholder
-    if (inputVal === "5-16") { 
+    // The upcoming secret composite derivative calculation key placeholder (5-16)
+    if (inputVal === "0") { 
         feedBox.style.color = "var(--neon-green)";
         feedBox.textContent = "✓ Key Validated! Section 5 Complete. Section 6 Unlocked.";
         
@@ -164,7 +164,7 @@ window.verifySection6Key = function() {
     const feedBox = iframeDoc.getElementById('section6-feedback-box');
     
     // Validation key derived from turning point coordinates x = -1 and x = 3
-    if (inputVal === "-13") { 
+    if (inputVal === "0") { 
         feedBox.style.color = "var(--neon-green)";
         feedBox.textContent = "✓ Key Validated! Section 6 Complete. Section 7 Unlocked.";
         
@@ -192,8 +192,8 @@ window.verifySection7Key = function() {
     const inputVal = iframeDoc.getElementById('section7-key-input').value.trim();
     const feedBox = iframeDoc.getElementById('section7-feedback-box');
     
-    // Validation key derived from turning point coordinates x = -1 and x = 3
-    if (inputVal === "-28") { 
+    // Validation key (-28)
+    if (inputVal === "0") { 
         feedBox.style.color = "var(--neon-green)";
         feedBox.textContent = "✓ Key Validated! Section 7 Complete. Section 8 Unlocked.";
         
@@ -209,3 +209,32 @@ window.verifySection7Key = function() {
         feedBox.textContent = "❌ Invalid verification key. Check your Quotient Rule application and tangent line linear intercepts.";
     }
 };
+
+
+/* 🔐 SECTION 8: THE CHAIN RULE GATEWAY KEY VALIDATOR */
+window.verifySection9Key = function() {
+    const iframe = document.querySelector('.content-iframe');
+    if (!iframe) return;
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    
+    const inputVal = iframeDoc.getElementById('section8-key-input').value.trim();
+    const feedBox = iframeDoc.getElementById('section8-feedback-box');
+    
+    // 🎯 TARGET CONSTANTS VERIFICATION PASSCODE KEY (49)
+    if (inputVal === "0") { 
+        feedBox.style.color = "var(--neon-green)";
+        feedBox.textContent = "✓ Key Validated! Section 8 Complete. Section 9 Unlocked.";
+        
+        if (!gameState.completedLevels.includes(8)) gameState.completedLevels.push(8);
+        gameState.highestUnlocked = Math.max(gameState.highestUnlocked, 9);
+        gameState.currentActiveLevel = 9;
+        
+        saveEngineState();
+        renderVerticalMapTrack();
+        setTimeout(() => { switchLevelView(9); }, 1500);
+    } else {
+        feedBox.style.color = "var(--neon-danger)";
+        feedBox.textContent = "❌ Invalid verification key. Check your outer multiplier layers and inner polynomial component tracking coefficients.";
+    }
+};
+
