@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Section 5: Introduction to Derivatives &amp; Tangents</title>
     <!-- Linked to your cleaned global stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 
@@ -351,11 +351,13 @@
                         y &minus; 9 = 6x &minus; 18
                     </div>
                     <div class="math-block" style="font-size:1.15rem; margin:10px 0;">
-                        y = 6x &minus; 18 + 9 &nbsp;&nbsp;&nbsp;&nbsp; &rArr; &nbsp;&nbsp;&nbsp;&nbsp; <strong style="color: var(--neon-green);">y = 6x &minus; 9</strong>
+                        y = 6x &minus; 18 + 9 &nbsp;&nbsp;&nbsp;&nbsp; &rArr; &nbsp;&nbsp;&nbsp;&nbsp; <strong style="color: var(--neon-blue);">y = 6x &minus; 9</strong>
                     </div>
                 </li>
             </ol>
         </div>
+
+        
     </div>
 
 
@@ -389,7 +391,7 @@
         </div>
 
         <!-- Exercise 2 -->
-        <div class="exercise-block" style="border-left-color: var(--neon-blue);">
+        <div class="exercise-block" style="border-left-color: var(--neon-green);">
             <div class="exercise-title">Exercise 5.2: Tangent Equation Construction</div>
             <p style="font-size:0.85rem; margin-top:0; color:var(--text-muted);">Find the function value <span class="math-inline">f(c)</span> and use the given derivative value to find the complete equation (<span class="math-inline">y = mx + p</span>) for the tangent line at the given point:</p>
             <div class="grid-2">
@@ -405,7 +407,7 @@
         </div>
 
         <!-- Exercise 3 -->
-        <div class="exercise-block" style="border-left-color: var(--neon-green); margin-bottom: 0;">
+        <div class="exercise-block" style="border-left-color: var(--neon-blue); margin-bottom: 0;">
             <div class="exercise-title">Exercise 5.3: [Advanced Challenge] Secant Slope Progression</div>
             
             <!-- Balanced Two-Column Grid Alignment -->
@@ -468,7 +470,7 @@
     <!-- Slide 6: Milestone Gatekeeper -->
     <div class="slide-content" id="slide-6">
         <h3 style="color: var(--neon-amber); margin-top: 0;">🏁 Section 5 Verification Check</h3>
-        <p>To finalize Module 5 and clear the next master gate lock, complete the instantaneous rate solutions in <strong>Exercise 5.1</strong> and <strong>Exercise 5.2</strong>. Calculate your target parameters for <strong>Exercise 5.1 part (b) [value of f'(1)]</strong> and the final y-intercept constant value for <strong>Exercise 5.2 part (a) [p-value]</strong>, then combine them directly back-to-back:</p>
+        <p>To finalize section 5 and clear the next master gate lock, complete the instantaneous rate solutions in <strong>Exercise 5.1</strong> and <strong>Exercise 5.2</strong>. Calculate your target parameters for <strong>Exercise 5.1 part (b) [value of f'(1)]</strong> and the final y-intercept constant value for <strong>Exercise 5.2 part (a) [p-value]</strong>, then combine them directly back-to-back:</p>
         <p style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Format: Enter both integers next to each other with no spaces or commas. For negative numbers, include the minus sign relative to that specific digit block (e.g., if answers were 4 and -25, you would enter 4-25).</p>
         
         <div style="display: flex; gap: 10px; margin-top: 20px;">
@@ -574,7 +576,7 @@
             }
         }
 
-function runLimitSimulation() {
+        function runLimitSimulation() {
     const slider = document.getElementById('slide2-slider');
     if (!slider) return;
     
@@ -625,9 +627,7 @@ function runLimitSimulation() {
         lineVec.setAttribute('y2', 150 - (yEnd * 10));
     }
 }
-
-
-
+        
         function runTangentSimulation() {
             const slider = document.getElementById('slide3-slider');
             if (!slider) return;
@@ -696,7 +696,7 @@ function runLimitSimulation() {
                 lineTarget.setAttribute('y2', 140 - (tEndY * 30));
             }
         }
-
+        
 
         window.addEventListener('DOMContentLoaded', () => {
             runUnifiedSkiSimulation();

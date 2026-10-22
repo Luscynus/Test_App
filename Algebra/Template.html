@@ -1,0 +1,150 @@
+Context: I am developing a new interactive textbook module file.
+Task: Generate only the structural scaffolding of the HTML module based on the provided section parameters. Do not write any slide content yet.
+
+Formatting Rules:
+1. Follow my core HTML page layout rules.
+2. Sync the section numbering precisely: Section [X] in the textbook maps directly to Section [Y] for the web app headers.
+3. Populate the navigation buttons with matching showSlide(N) indices.
+4. Keep all slide content containers completely blank, containing only an <h3> title label placeholder for now.
+5. Stop immediately after producing the empty template. Outline exactly what conceptual content and parameters will populate each tab based on the notes before writing any further layout code.
+6. Always include the standard Deck Navigation System Controller block directly at the bottom of the body section to ensure tab state tracking functions instantly.
+7. Along with the empty template, automatically output the updated parent JavaScript validation function (window.verifySection[X]Key) that will live inside index.html, ensuring the game state array checks, index updates, and feedback messages are perfectly synced to the new level parameters from the get-go.
+
+Module Blueprint Reference Frame:
+• Title: [Insert Title]
+• Tab 1: [Insert Tab 1 Title]
+• Tab 2: [Insert Tab 2 Title]
+• Tab 3: [Insert Tab 3 Title]
+• Tab 4: [Insert Tab 4 Title]
+• Tab 5: [Insert Tab 5 Title]
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>[X]. Interactive Module</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h2>[X]. [Insert Section Title Header Here]</h2>
+
+    <!-- Step Controls Nav Array -->
+    <div class="tab-nav">
+        <button class="tab-btn active" onclick="showSlide(1)">1. [Tab 1 Title]</button>
+        <button class="tab-btn" onclick="showSlide(2)">2. [Tab 2 Title]</button>
+        <button class="tab-btn" onclick="showSlide(3)">3. [Tab 3 Title]</button>
+        <button class="tab-btn" onclick="showSlide(4)">4. [Tab 4 Title]</button>
+        <button class="tab-btn" style="border-color: var(--neon-amber); color: var(--neon-amber);" onclick="showSlide(5)">🔑 5. Milestone Unlock</button>
+    </div>
+
+    <!-- Slide 1: Overview -->
+    <div class="slide-content active" id="slide-1">
+        <h3>1. [Tab 1 Title] Placeholders</h3>
+    </div>
+
+    <!-- Slide 2: Core Concept / Rules Matrix -->
+    <div class="slide-content" id="slide-2">
+        <h3>2. [Tab 2 Title] Placeholders</h3>
+    </div>
+
+    <!-- Slide 3: Worked Examples Component (Strict Card Layout Wrapper) -->
+    <div class="slide-content" id="slide-3">
+        <h3>3. [Tab 3 Title] Placeholders</h3>
+        
+        <!-- 📘 STANDARD EXAMPLE CARD VARIANT -->
+        <div class="example" style="margin-bottom: 20px;">
+            <strong>Example [X].1:</strong> Title text here:
+            <div class="math-block" style="margin: 10px 0; font-size: 1.05rem;">[Math Equation Placeholder]</div>
+            <strong>Solution Steps:</strong>
+            <ol style="margin-bottom: 0; padding-left: 20px; line-height: 1.6;">
+                <li>Step description text here.</li>
+                <li style="list-style: none; margin-left: -20px; margin-top: 6px;">
+                    <span style="color: var(--neon-blue); font-weight: bold;">[Final Formula Metric]</span>
+                </li>
+            </ol>
+        </div>
+
+        <!-- 📘 COLOR-CODED ACCENT VARIANT CARD -->
+        <div class="example" style="border-left-color: var(--neon-cyan); background-color: #0c1e36; margin-bottom: 20px;">
+            <strong>Example [X].2:</strong> Title text here:
+            <div class="math-block" style="margin: 10px 0; font-size: 1.05rem;">[Math Equation Placeholder]</div>
+            <strong>Solution Steps:</strong>
+            <ol style="margin-bottom: 0; padding-left: 20px; line-height: 1.6;">
+                <li>Step description text here.</li>
+                <li style="list-style: none; margin-left: -20px; margin-top: 6px;">
+                    <span style="color: var(--neon-blue); font-weight: bold;">[Final Formula Metric]</span>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Slide 4: Practice Set / Lab Array Component -->
+    <div class="slide-content" id="slide-4">
+        <h3 style="color: var(--neon-amber); margin-top: 0;">🏋️ Mandatory Written Exercises</h3>
+        <p>Solve these target check points cleanly on your physical workbook sheets or iPad note canvas:</p>
+        
+        <!-- 🏋️ COLOR-CODED EXERCISE BLOCK CONTAINER -->
+        <div class="exercise-block">
+            <div class="exercise-title">Exercise [X].1</div>
+            <p style="font-size:0.85rem; margin-top:0; color:var(--text-muted);">Instructions description details here.</p>
+            <div class="grid-2">
+                <div class="exercise-item">a)&nbsp;<span class="math-inline">[Equation]</span></div>
+                <div class="exercise-item">b)&nbsp;<span class="math-inline">[Equation]</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Milestone Unlock Gateway Framework -->
+    <div class="slide-content" id="slide-5">
+        <h3 style="color: var(--neon-amber); margin-top: 0;">🏁 Section [X] Verification Check</h3>
+        <p>To finalize Section [X] and clear the next master gate lock, complete the target problem metrics analysis. Gather your target parameters, then combine them directly back-to-back from left to right:</p>
+        <p style="color: var(--text-muted); font-size: 0.85rem; font-style: italic;">Format: Enter both integers next to each other with no spaces or commas.</p>
+        
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <input type="text" id="section[X]-key-input" placeholder="Enter constants code..." autocomplete="off" style="background: #0f172a; border: 1px solid #334155; color: var(--text-main); padding: 12px; border-radius: 8px; font-size: 1rem; width: 220px;">
+            <button style="background: var(--neon-amber); color: #090d16; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer;" onclick="parent.verifySectionXKey()">Submit Verification</button>
+        </div>
+        <div id="section[X]-feedback-box" style="margin-top: 15px; font-weight: 700;"></div>
+    </div>
+
+    <script>
+        function showSlide(slideIndex) {
+            document.querySelectorAll('.slide-content').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            const targetSlide = document.getElementById(`slide-${slideIndex}`);
+            if (targetSlide) targetSlide.classList.add('active');
+            const buttons = document.querySelectorAll('.tab-btn');
+            if (buttons[slideIndex - 1]) buttons[slideIndex - 1].classList.add('active');
+        }
+    </script>
+</body>
+</html>
+        /* 🔐 SECTION [X] VERIFICATION SUBSYSTEM LAYER */
+        window.verifySection[X]Key = function() {
+            const iframe = document.querySelector('.content-iframe');
+            if (!iframe) return;
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            
+            const inputVal = iframeDoc.getElementById('section[X]-key-input').value.trim();
+            const feedBox = iframeDoc.getElementById('section[X]-feedback-box');
+            
+            if (inputVal === "[TARGET_KEY]") { 
+                feedBox.style.color = "var(--neon-green)";
+                feedBox.textContent = "✓ Key Validated! Section [X] Complete. Section [Y] Unlocked.";
+                
+                if (!gameState.completedLevels.includes([X])) gameState.completedLevels.push([X]);
+                gameState.highestUnlocked = Math.max(gameState.highestUnlocked, [Y]);
+                gameState.currentActiveLevel = [Y];
+                
+                saveEngineState();
+                renderVerticalMapTrack();
+                setTimeout(() => { switchLevelView([Y]); }, 1500);
+            } else {
+                feedBox.style.color = "var(--neon-danger)";
+                feedBox.textContent = "❌ Invalid verification key. Check your calculations and try again.";
+            }
+        };
